@@ -7,6 +7,16 @@ export type HeroContent = {
   eyebrow: string;
   title: string;
   description: string;
+  image: {
+    src: string;
+    alt: string;
+  };
+  badges: Array<{
+    label: string;
+    icon: string;
+    iconWidth: number;
+    iconHeight: number;
+  }>;
   primaryAction: LinkContent;
   secondaryAction: LinkContent;
 };

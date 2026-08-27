@@ -3,8 +3,10 @@ import type { LayoutConfig } from "./config.types";
 export const layoutConfig = {
   navigation: [
     { label: "Calidad", href: "#calidad" },
-    { label: "Sabores", href: "#sabores" },
+    { label: "Combos", href: "#combos" },
+    { label: "Cómo funciona", href: "#como-funciona" },
     { label: "FAQ", href: "#faq" },
   ],
-  cta: { label: "Ver opciones", href: "#sabores" },
+  note: "Entregas vie. y sáb. · 18–21 h",
+  cta: { label: "Reservar", href: "#reservar" },
 } satisfies LayoutConfig;

@@ -2,10 +2,11 @@ import type { SiteConfig } from "./config.types";
 import { siteUrl } from "./url.config";
 
 export const siteConfig: SiteConfig = {
- brand: "Business Name",
-  name: "Business Name",
+  brand: "Simple Sushi",
+  name: "Simple Sushi",
   logo: {
-    alt: "Business Name",
+    src: "/brand/logo/logo.png",
+    alt: "Simple Sushi",
   },
   locale: "es",
   url: siteUrl,

@@ -38,5 +38,6 @@ export type SeoConfig = {
 
 export type LayoutConfig = {
   navigation: Array<{ label: string; href: string }>;
+  note: string;
   cta: { label: string; href: string };
 };

@@ -10,7 +10,7 @@ const buttonVariants = cva(
         primary:
           "bg-primary text-primary-foreground hover:bg-primary/90 focus-visible:outline-accent",
         secondary:
-          "border border-border bg-surface text-surface-foreground hover:bg-muted focus-visible:outline-accent",
+          "border border-border/60 bg-surface/20 text-surface-foreground hover:bg-surface/40 focus-visible:outline-accent",
       },
     },
     defaultVariants: {
