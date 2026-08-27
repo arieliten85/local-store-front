@@ -1,6 +1,31 @@
 export { OrderSummary } from "./components/order-summary";
 export { calculateOrderTotal } from "./lib/calculate-order-total";
+export {
+  buildOrderMessage,
+  buildWhatsAppHref,
+} from "./lib/build-order-message";
 export { formatOrderMessage } from "./lib/format-order-message";
-export { emptyOrderDraft } from "./model/order.defaults";
-export { orderDraftSchema, orderItemSchema } from "./model/order.schema";
-export type { OrderDraft, OrderItem, OrderTotal } from "./model/order.types";
+export { formatOrderSummary, formatPrice } from "./lib/format-order-summary";
+export { isOrderComplete } from "./lib/is-order-complete";
+export { emptyOrderDraft, emptyOrderState } from "./model/order.defaults";
+export {
+  deliveryDateSchema,
+  deliverySlotSchema,
+  optionStatusSchema,
+  orderDraftSchema,
+  orderItemSchema,
+  orderSizeSchema,
+  orderStateSchema,
+} from "./model/order.schema";
+export type {
+  DeliveryDate,
+  DeliverySlot,
+  OptionStatus,
+  OrderDelivery,
+  OrderDraft,
+  OrderItem,
+  OrderSize,
+  OrderState,
+  OrderTotal,
+  StaticOptionStatus,
+} from "./model/order.types";

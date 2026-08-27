@@ -25,6 +25,7 @@
 *.pem
 .atl/
 local-store-front/
+/figma-ref/
 
 # debug
 npm-debug.log*

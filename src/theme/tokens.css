@@ -16,6 +16,8 @@
   --card-foreground: #e7e2da;
   --card-product: #1f1f1f;
   --card-product-muted: rgb(78 70 55 / 0.1);
+  --status-success: #42b96b;
+  --status-danger: #a66b63;
 
   --radius-token-sm: 0.375rem;
   --radius-token-md: 0.75rem;
@@ -55,6 +57,8 @@
   --color-card-foreground: var(--card-foreground);
   --color-card-product: var(--card-product);
   --color-card-product-muted: var(--card-product-muted);
+  --color-status-success: var(--status-success);
+  --color-status-danger: var(--status-danger);
   --font-heading: var(--font-heading-family);
   --font-body: var(--font-body-family);
   --radius-sm: var(--radius-token-sm);

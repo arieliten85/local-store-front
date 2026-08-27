@@ -77,3 +77,62 @@ export type FaqContent = {
   title: string;
   items: FaqItem[];
 };
+
+export type OrderStepContent = {
+  label: string;
+};
+
+export type OrderContent = {
+  heading: {
+    title: string;
+  };
+  gallery: {
+    label: string;
+    viewLabel: string;
+    featured: ImageContent;
+    thumbnails: ImageContent[];
+  };
+  steps: {
+    size: OrderStepContent;
+    date: OrderStepContent;
+    slot: OrderStepContent;
+    address: { label: string };
+  };
+  productName: string;
+  recommendedBadge: string;
+  availabilityNotes: {
+    available: string;
+    soldOut: string;
+  };
+  buyLabel: string;
+  addressField: {
+    label: string;
+    placeholder: string;
+    helper: string;
+    requiredMessage: string;
+  };
+  dialog: {
+    title: string;
+    subtitle: string;
+    sizeLabel: string;
+    dateLabel: string;
+    slotLabel: string;
+    addressLabel: string;
+    deliveryLabel: string;
+    coverageLabel: string;
+    totalLabel: string;
+    freeDeliveryValue: string;
+    coverageValue: string;
+    footnote: string;
+    backLabel: string;
+    confirmLabel: string;
+    closeLabel: string;
+  };
+  message: {
+    greeting: string;
+    sizeLabel: string;
+    scheduleLabel: string;
+    addressLabel: string;
+    totalLabel: string;
+  };
+};

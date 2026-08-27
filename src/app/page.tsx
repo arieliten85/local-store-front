@@ -2,12 +2,26 @@ import { Header } from "@/components/sections/header";
 import { Hero } from "@/components/sections/hero";
 import { Quality } from "@/components/sections/quality";
 import { Flavors } from "@/components/sections/flavors";
+import { OrderBuilder } from "@/components/sections/order-builder";
+import { Footer } from "@/components/sections/footer";
 import { layoutConfig } from "@/config/layout.config";
 import { siteConfig } from "@/config/site.config";
 import { homeContent } from "@/content/home.content";
 import { catalogContent } from "@/content/catalog.content";
+import { orderContent } from "@/content/order.content";
+import {
+  deliveryDates,
+  deliverySlots,
+  orderDelivery,
+  orderSizes,
+  orderWhatsAppNumber,
+} from "@/config/order.config";
 
 export default function Home() {
+  const socials = Object.entries(siteConfig.socials).map(([label, href]) => ({
+    label,
+    href,
+  }));
   return (
     <>
       <Header
@@ -21,7 +35,19 @@ export default function Home() {
         <Hero {...homeContent.hero} />
         <Quality {...homeContent.quality} />
         <Flavors {...catalogContent} />
+        <OrderBuilder
+          sizes={orderSizes}
+          dates={deliveryDates}
+          slots={deliverySlots}
+          delivery={orderDelivery}
+          whatsappNumber={orderWhatsAppNumber}
+          content={orderContent}
+        />
+        {/* <Process {...homeContent.process} />
+        <Faq {...faqContent} />
+        <FinalCta {...homeContent.finalCta} /> */}
       </main>
+      <Footer name={siteConfig.name} socials={socials} />
     </>
   );
 }
