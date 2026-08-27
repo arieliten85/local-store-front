@@ -49,8 +49,10 @@ export type HomeContent = {
     items: TextCard[];
   };
   finalCta: {
+    eyebrow: string;
     title: string;
     description: string;
+    image: ImageContent;
     action: LinkContent;
   };
 };
@@ -73,9 +75,32 @@ export type FaqItem = {
 };
 
 export type FaqContent = {
-  eyebrow: string;
   title: string;
   items: FaqItem[];
+};
+
+export type FooterContent = {
+  reservations: {
+    title: string;
+    lines: string[];
+  };
+  deliveries: {
+    title: string;
+    lines: string[];
+  };
+  coverage: {
+    title: string;
+    area: string;
+    description: string;
+  };
+  contact: {
+    title: string;
+    whatsappLabel: string;
+  };
+  linksTitle: string;
+  socialsTitle: string;
+  copyright: string;
+  legalLinks: LinkContent[];
 };
 
 export type OrderStepContent = {

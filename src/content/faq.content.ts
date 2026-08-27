@@ -1,21 +1,22 @@
 import type { FaqContent } from "./content.types";
 
 export const faqContent = {
-  eyebrow: "FAQ",
-  title: "Preguntas frecuentes listas para datos reales.",
+  title: "Preguntas Frecuentes",
   items: [
     {
-      question: "¿Dónde cambio los datos del negocio?",
+      question: "¿Qué días hacen entregas?",
       answer:
-        "En src/config y src/content, sin tocar componentes reutilizables.",
+        "Realizamos entregas los viernes y sábados, entre las 18:00 y las 21:00.",
     },
     {
-      question: "¿Por qué no hay dirección ni horarios?",
-      answer: "Porque esos datos deben cargarse solo cuando estén confirmados.",
+      question: "¿Cuándo debo hacer mi reserva?",
+      answer:
+        "Podés reservar durante la semana. Recomendamos hacerlo con anticipación para asegurar tu tamaño y horario preferidos.",
     },
     {
-      question: "¿Este starter incluye checkout?",
-      answer: "No. Solo deja preparada la lógica base de pedido, sin backend.",
+      question: "¿El envío tiene costo?",
+      answer:
+        "El envío es gratuito dentro de Alejandro Korn, en un radio de hasta 3 km.",
     },
   ],
 } satisfies FaqContent;

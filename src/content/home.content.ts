@@ -79,31 +79,35 @@ export const homeContent = {
   },
 
   process: {
-    eyebrow: "Proceso",
-    title: "Una base lista para adaptarse a cada proyecto.",
+    eyebrow: "",
+    title: "Cómo funciona",
     items: [
       {
-        title: "Definir identidad",
+        title: "Reserva",
         description:
-          "Configura la marca, el estilo visual y la información principal.",
+          "Elegí el tamaño ideal para tu noche y envianos un mensaje directo. Confirmamos stock al instante para asegurar tu lugar.",
       },
       {
-        title: "Cargar contenido",
+        title: "Preparación",
         description:
-          "Personaliza textos, imágenes, secciones y llamadas a la acción.",
+          "Nuestros sushiman elaboran tu pedido pocas horas antes de la entrega. Frescura absoluta y precisión artesanal en cada pieza.",
       },
       {
-        title: "Publicar y evolucionar",
+        title: "Disfrutá",
         description:
-          "La estructura queda preparada para crecer según las necesidades del proyecto.",
+          "Recibí tu pedido en la puerta de tu casa. Todo listo para una experiencia gastronómica de nivel.",
       },
     ],
   },
 
   finalCta: {
-    title: "Una base preparada para tu próxima idea.",
-    description:
-      "Personaliza la identidad, el contenido y los recursos visuales para adaptar la experiencia a cada negocio.",
-    action: { label: "Explorar contenido", href: "#content" },
+    eyebrow: "SIMPLE SUSHI",
+    title: "Reservá durante la semana. Nosotros lo preparamos para vos.",
+    description: "Reservá durante la semana y elegí el día que más te guste.",
+    image: {
+      src: "/brand/hero/hero-table.png",
+      alt: "Tabla surtida de sushi preparada por Simple Sushi",
+    },
+    action: { label: "Reservar mi tabla", href: "#reserve" },
   },
 } satisfies HomeContent;

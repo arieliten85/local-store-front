@@ -6,25 +6,39 @@ type ProcessProps = HomeContent["process"];
 
 export function Process({ eyebrow, title, items }: ProcessProps) {
   return (
-    <section id="process" className="bg-muted py-section-md">
+    <section id="process" className="bg-background py-section-md">
       <Container>
-        <SectionHeading eyebrow={eyebrow} title={title} />
-        <ol className="mt-10 grid gap-4 md:grid-cols-3">
-          {items.map((item, index) => (
-            <li
-              key={item.title}
-              className="rounded-card bg-surface p-6 shadow-sm"
-            >
-              <span className="text-accent text-sm font-semibold">
-                0{index + 1}
-              </span>
-              <h3 className="mt-4 text-lg font-semibold">{item.title}</h3>
-              <p className="text-muted-foreground mt-3 leading-7">
-                {item.description}
-              </p>
-            </li>
-          ))}
-        </ol>
+        <SectionHeading eyebrow={eyebrow} title={title} align="center" />
+        <div className="max-w-content-wide relative mx-auto mt-12">
+          <span
+            aria-hidden="true"
+            className="border-accent/45 absolute top-9 right-[16.666%] left-[16.666%] hidden border-t border-dashed md:block"
+          />
+          <ol className="grid gap-10 md:grid-cols-3 md:gap-6">
+            {items.map((item, index) => (
+              <li
+                key={item.title}
+                className="relative z-10 flex flex-col items-center text-center"
+              >
+                <span
+                  aria-hidden="true"
+                  className="font-heading text-accent/5 absolute -top-8 text-8xl"
+                >
+                  0{index + 1}
+                </span>
+                <span className="border-accent bg-card text-accent font-heading relative flex size-18 items-center justify-center rounded-full border text-2xl shadow-md">
+                  {index + 1}
+                </span>
+                <h3 className="font-heading text-foreground mt-7 text-xl font-medium">
+                  {item.title}
+                </h3>
+                <p className="text-muted-foreground mt-3 max-w-72 text-sm leading-6">
+                  {item.description}
+                </p>
+              </li>
+            ))}
+          </ol>
+        </div>
       </Container>
     </section>
   );

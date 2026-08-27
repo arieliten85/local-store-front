@@ -29,7 +29,7 @@ export function OrderBuilder({
   const { heading, gallery } = content;
   return (
     <section
-      id="order-builder"
+      id="reserve"
       aria-labelledby="order-builder-title"
       className="bg-surface py-section-sm lg:py-7"
     >
