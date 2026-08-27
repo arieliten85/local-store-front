@@ -1,0 +1,70 @@
+:root {
+  --primary: #0f172a;
+  --primary-foreground: #ffffff;
+  --secondary: #f2e8df;
+  --secondary-foreground: #2d1f18;
+  --background: #fffaf5;
+  --foreground: #1f1a17;
+  --surface: #ffffff;
+  --surface-foreground: #1f1a17;
+  --muted: #f7efe7;
+  --muted-foreground: #6f6259;
+  --accent: #b84a3a;
+  --accent-foreground: #ffffff;
+  --border: #eadfd5;
+  --card: #ffffff;
+  --card-foreground: #1f1a17;
+
+  --radius-token-sm: 0.375rem;
+  --radius-token-md: 0.75rem;
+  --radius-token-lg: 1.25rem;
+  --radius-token-card: 1.5rem;
+  --radius-token-button: 999rem;
+
+  --shadow-token-sm: 0 1px 2px rgb(31 26 23 / 0.08);
+  --shadow-token-md: 0 12px 32px rgb(31 26 23 / 0.1);
+  --shadow-token-lg: 0 24px 70px rgb(31 26 23 / 0.14);
+
+  --container: 72rem;
+  --content-narrow: 42rem;
+  --content-medium: 56rem;
+  --content-wide: 72rem;
+  --section-spacing-sm: 3rem;
+  --section-spacing-md: 5rem;
+  --section-spacing-lg: 7rem;
+}
+
+@theme inline {
+  --color-primary: var(--primary);
+  --color-primary-foreground: var(--primary-foreground);
+  --color-secondary: var(--secondary);
+  --color-secondary-foreground: var(--secondary-foreground);
+  --color-background: var(--background);
+  --color-foreground: var(--foreground);
+  --color-surface: var(--surface);
+  --color-surface-foreground: var(--surface-foreground);
+  --color-muted: var(--muted);
+  --color-muted-foreground: var(--muted-foreground);
+  --color-accent: var(--accent);
+  --color-accent-foreground: var(--accent-foreground);
+  --color-border: var(--border);
+  --color-card: var(--card);
+  --color-card-foreground: var(--card-foreground);
+  --font-heading: var(--font-heading-family);
+  --font-body: var(--font-body-family);
+  --radius-sm: var(--radius-token-sm);
+  --radius-md: var(--radius-token-md);
+  --radius-lg: var(--radius-token-lg);
+  --radius-card: var(--radius-token-card);
+  --radius-button: var(--radius-token-button);
+  --shadow-sm: var(--shadow-token-sm);
+  --shadow-md: var(--shadow-token-md);
+  --shadow-lg: var(--shadow-token-lg);
+  --spacing-container: var(--container);
+  --spacing-content-narrow: var(--content-narrow);
+  --spacing-content-medium: var(--content-medium);
+  --spacing-content-wide: var(--content-wide);
+  --spacing-section-sm: var(--section-spacing-sm);
+  --spacing-section-md: var(--section-spacing-md);
+  --spacing-section-lg: var(--section-spacing-lg);
+}
