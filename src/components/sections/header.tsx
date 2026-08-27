@@ -15,9 +15,9 @@ export function Header({ name, logo, navigation, note, cta }: HeaderProps) {
     <header className="border-border/10 bg-surface/80 sticky top-0 z-20 border-b backdrop-blur-md">
       <Container className="flex min-h-[5.6875rem] items-center justify-between gap-4 py-3 lg:px-10">
         <a
-          href="#inicio"
+          href="#home"
           className="focus-visible:outline-accent flex shrink-0 items-center rounded-sm"
-          aria-label={`${name}: ir al inicio`}
+          aria-label={`${name}: go to home`}
         >
           {logo?.src ? (
             <Image
@@ -33,7 +33,7 @@ export function Header({ name, logo, navigation, note, cta }: HeaderProps) {
           )}
         </a>
         <nav
-          aria-label="Principal"
+          aria-label="Main"
           className="hidden items-center gap-6 lg:flex"
         >
           {navigation.map((item) => (

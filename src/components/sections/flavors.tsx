@@ -1,44 +1,43 @@
-import type { CatalogContent } from "@/content/content.types";
+import Image from "next/image";
+import type { ProductContent } from "@/content/content.types";
 import { Container } from "@/components/ui/container";
 import { SectionHeading } from "@/components/ui/section-heading";
+import { Carousel } from "@/components/ui/carousel";
 
-type FlavorsProps = CatalogContent & {
-  formatPrice: (price?: number) => string;
-};
+type FlavorsProps = ProductContent;
 
-export function Flavors({
-  eyebrow,
-  title,
-  description,
-  items,
-  formatPrice,
-}: FlavorsProps) {
+export function Flavors({ title, description, items }: FlavorsProps) {
   return (
-    <section id="sabores" className="py-section-md">
+    <section id="flavors" className="bg-background py-section-md">
       <Container>
-        <SectionHeading
-          eyebrow={eyebrow}
-          title={title}
-          description={description}
-        />
-        <div className="mt-10 grid gap-4 md:grid-cols-3">
+        <SectionHeading title={title} description={description} />
+        <Carousel prevLabel="Previous flavors" nextLabel="Next flavors">
           {items.map((item) => (
             <article
-              key={item.id}
-              className="rounded-card border-border bg-card border p-6"
+              key={item.name}
+              data-carousel-item
+              className="w-[78%] snap-start shrink-0 rounded-card-sm bg-card-product overflow-hidden shadow-sm sm:w-[45%] md:w-[32%] lg:w-[24%]"
             >
-              <h3 className="text-card-foreground text-xl font-semibold">
-                {item.name}
-              </h3>
-              <p className="text-muted-foreground mt-3 leading-7">
-                {item.description}
-              </p>
-              <p className="text-accent mt-5 text-sm font-semibold">
-                {formatPrice(item.price)}
-              </p>
+              <div className="bg-card-product-muted relative aspect-[508/512]">
+                <Image
+                  src={item.image.src}
+                  alt={item.image.alt}
+                  fill
+                  sizes="(max-width: 640px) 100vw, (max-width: 1024px) 50vw, 25vw"
+                  className="object-cover"
+                />
+              </div>
+              <div className="p-5">
+                <h3 className="text-foreground text-lg font-semibold">
+                  {item.name}
+                </h3>
+                <p className="text-muted-foreground mt-2 leading-6">
+                  {item.ingredients}
+                </p>
+              </div>
             </article>
           ))}
-        </div>
+        </Carousel>
       </Container>
     </section>
   );

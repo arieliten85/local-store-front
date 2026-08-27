@@ -14,7 +14,7 @@ export function Hero({
 }: HeroContent) {
   return (
     <section
-      id="inicio"
+      id="home"
       className="relative isolate min-h-[calc(100svh-5.6875rem)] overflow-hidden"
     >
       <Image

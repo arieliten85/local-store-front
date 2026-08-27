@@ -36,31 +36,44 @@ export const homeContent = {
         iconHeight: 17,
       },
     ],
-    primaryAction: { label: "Reservar mi tabla", href: "#reservar" },
-    secondaryAction: { label: "Ver Combos", href: "#combos" },
+    primaryAction: { label: "Reservar mi tabla", href: "#reserve" },
+    secondaryAction: { label: "Ver Combos", href: "#flavors" },
   },
 
   quality: {
-    eyebrow: "Propuesta",
-    title:
-      "Una estructura preparada para comunicar valor desde el primer vistazo.",
-    description:
-      "Cada sección puede adaptarse al contenido, identidad y necesidades de cada negocio.",
+    title: "Nuestra Promesa",
     items: [
       {
-        title: "Contenido flexible",
-        description:
-          "Los textos y datos pueden actualizarse sin modificar la estructura visual.",
+        title: "Ingredientes seleccionados",
+        description: "Calidad premium garantizada en cada corte.",
+        image: {
+          src: "/brand/quality/selected-ingredients.png",
+          alt: "Ingredientes seleccionados de sushi de alta calidad",
+        },
       },
       {
-        title: "Identidad adaptable",
-        description:
-          "Colores, tipografías, imágenes y estilos pueden personalizarse para cada marca.",
+        title: "Preparado a pedido",
+        description: "Fresco, armado exclusivamente para tu entrega.",
+        image: {
+          src: "/brand/quality/made-to-order.png",
+          alt: "Sushi preparado a pedido, listo para entregar",
+        },
       },
       {
-        title: "Base consistente",
-        description:
-          "La estructura mantiene una experiencia clara, ordenada y fácil de recorrer.",
+        title: "Elaboración artesanal",
+        description: "Técnicas tradicionales y respeto por el producto.",
+        image: {
+          src: "/brand/quality/artisan-preparation.png",
+          alt: "Elaboración artesanal de sushi",
+        },
+      },
+      {
+        title: "Cadena de frío cuidada",
+        description: "Control estricto desde el origen hasta tu mesa.",
+        image: {
+          src: "/brand/quality/cold-chain.png",
+          alt: "Sushi mantenido en una cadena de frío cuidada",
+        },
       },
     ],
   },
@@ -91,6 +104,6 @@ export const homeContent = {
     title: "Una base preparada para tu próxima idea.",
     description:
       "Personaliza la identidad, el contenido y los recursos visuales para adaptar la experiencia a cada negocio.",
-    action: { label: "Explorar contenido", href: "#contenido" },
+    action: { label: "Explorar contenido", href: "#content" },
   },
 } satisfies HomeContent;

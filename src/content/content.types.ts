@@ -3,6 +3,11 @@ export type LinkContent = {
   href: string;
 };
 
+export type ImageContent = {
+  src: string;
+  alt: string;
+};
+
 export type HeroContent = {
   eyebrow: string;
   title: string;
@@ -26,13 +31,17 @@ export type TextCard = {
   description: string;
 };
 
+export type QualityItem = {
+  title: string;
+  description: string;
+  image: ImageContent;
+};
+
 export type HomeContent = {
   hero: HeroContent;
   quality: {
-    eyebrow: string;
     title: string;
-    description: string;
-    items: TextCard[];
+    items: QualityItem[];
   };
   process: {
     eyebrow: string;
@@ -46,18 +55,16 @@ export type HomeContent = {
   };
 };
 
-export type CatalogItem = {
-  id: string;
+export type ProductItem = {
   name: string;
-  description: string;
-  price?: number;
+  ingredients: string;
+  image: ImageContent;
 };
 
-export type CatalogContent = {
-  eyebrow: string;
+export type ProductContent = {
   title: string;
   description: string;
-  items: CatalogItem[];
+  items: ProductItem[];
 };
 
 export type FaqItem = {

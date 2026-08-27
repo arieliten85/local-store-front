@@ -14,9 +14,12 @@
   --border: #4e4637;
   --card: #181611;
   --card-foreground: #e7e2da;
+  --card-product: #1f1f1f;
+  --card-product-muted: rgb(78 70 55 / 0.1);
 
   --radius-token-sm: 0.375rem;
   --radius-token-md: 0.75rem;
+  --radius-token-card-sm: 1rem;
   --radius-token-lg: 1.25rem;
   --radius-token-card: 1.5rem;
   --radius-token-button: 999rem;
@@ -50,10 +53,13 @@
   --color-border: var(--border);
   --color-card: var(--card);
   --color-card-foreground: var(--card-foreground);
+  --color-card-product: var(--card-product);
+  --color-card-product-muted: var(--card-product-muted);
   --font-heading: var(--font-heading-family);
   --font-body: var(--font-body-family);
   --radius-sm: var(--radius-token-sm);
   --radius-md: var(--radius-token-md);
+  --radius-card-sm: var(--radius-token-card-sm);
   --radius-lg: var(--radius-token-lg);
   --radius-card: var(--radius-token-card);
   --radius-button: var(--radius-token-button);

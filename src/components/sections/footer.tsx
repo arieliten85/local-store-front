@@ -14,7 +14,7 @@ export function Footer({ name, socials }: FooterProps) {
           reservados.
         </p>
         {socials.length > 0 ? (
-          <nav aria-label="Redes sociales" className="flex gap-4">
+          <nav aria-label="Social links" className="flex gap-4">
             {socials.map((item) => (
               <a
                 key={item.href}

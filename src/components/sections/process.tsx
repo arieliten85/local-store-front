@@ -6,7 +6,7 @@ type ProcessProps = HomeContent["process"];
 
 export function Process({ eyebrow, title, items }: ProcessProps) {
   return (
-    <section id="proceso" className="bg-muted py-section-md">
+    <section id="process" className="bg-muted py-section-md">
       <Container>
         <SectionHeading eyebrow={eyebrow} title={title} />
         <ol className="mt-10 grid gap-4 md:grid-cols-3">

@@ -1,29 +1,106 @@
-import type { CatalogContent } from "./content.types";
+import type { ProductContent } from "./content.types";
 
 export const catalogContent = {
-  eyebrow: "Propuesta",
-  title: "Opciones pensadas para presentar lo que ofrece tu negocio.",
-  description:
-    "Este catálogo funciona como una base flexible para mostrar productos, servicios o propuestas de manera clara y ordenada.",
+  title: "Los Sabores",
+
+  description: "La selección perfecta para una experiencia completa.",
 
   items: [
     {
-      id: "opcion-principal",
-      name: "Opción principal",
-      description:
-        "Elemento destacado para presentar una propuesta relevante del negocio.",
+      name: "Salmón",
+      ingredients: "salmón, queso crema",
+      image: {
+        src: "/brand/products/salmon-roll.png",
+        alt: "Rollo de sushi de salmón con queso crema",
+      },
     },
     {
-      id: "opcion-destacada",
-      name: "Opción destacada",
-      description:
-        "Alternativa pensada para mostrar otra opción importante dentro de la oferta.",
+      name: "Langostino",
+      ingredients: "langostino, palta",
+      image: {
+        src: "/brand/products/langostino-roll.png",
+        alt: "Rollo de sushi de langostino con palta",
+      },
     },
     {
-      id: "opcion-adicional",
-      name: "Opción adicional",
-      description:
-        "Contenido flexible para completar la propuesta con otra alternativa.",
+      name: "Atún",
+      ingredients: "atún, wasabi",
+      image: {
+        src: "/brand/products/atun-roll.png",
+        alt: "Rollo de sushi de atún con wasabi",
+      },
+    },
+    {
+      name: "Veggie",
+      ingredients: "palta, pepino",
+      image: {
+        src: "/brand/products/veggie-roll.png",
+        alt: "Rollo de sushi veggie con palta y pepino",
+      },
+    },
+    {
+      name: "Salmón Teriyaki",
+      ingredients: "salmón, salsa teriyaki, sésamo",
+      image: {
+        src: "/brand/products/salmon-roll.png",
+        alt: "Rollo de sushi de salmón teriyaki con sésamo",
+      },
+    },
+    {
+      name: "Langostino Crispy",
+      ingredients: "langostino, palta, panko",
+      image: {
+        src: "/brand/products/langostino-roll.png",
+        alt: "Rollo de sushi de langostino crispy con palta",
+      },
+    },
+    {
+      name: "Atún Picante",
+      ingredients: "atún, salsa picante, cebolla de verdeo",
+      image: {
+        src: "/brand/products/atun-roll.png",
+        alt: "Rollo de sushi de atún picante con cebolla de verdeo",
+      },
+    },
+    {
+      name: "Veggie Especial",
+      ingredients: "palta, pepino, zanahoria, sésamo",
+      image: {
+        src: "/brand/products/veggie-roll.png",
+        alt: "Rollo de sushi veggie con palta, pepino y zanahoria",
+      },
+    },
+    {
+      name: "Philadelphia",
+      ingredients: "salmón, queso crema, palta",
+      image: {
+        src: "/brand/products/salmon-roll.png",
+        alt: "Rollo de sushi Philadelphia con salmón y palta",
+      },
+    },
+    {
+      name: "Ebi Roll",
+      ingredients: "langostino, queso crema, ciboulette",
+      image: {
+        src: "/brand/products/langostino-roll.png",
+        alt: "Rollo de sushi de langostino con queso crema y ciboulette",
+      },
+    },
+    {
+      name: "Spicy Tuna",
+      ingredients: "atún, mayonesa picante, sésamo",
+      image: {
+        src: "/brand/products/atun-roll.png",
+        alt: "Rollo de sushi de atún con mayonesa picante",
+      },
+    },
+    {
+      name: "Green Roll",
+      ingredients: "palta, pepino, queso crema",
+      image: {
+        src: "/brand/products/veggie-roll.png",
+        alt: "Rollo de sushi veggie con palta, pepino y queso crema",
+      },
     },
   ],
-} satisfies CatalogContent;
+} satisfies ProductContent;

@@ -40,6 +40,8 @@ Componentes controlan implementación.
 - Keep important SEO server-rendered.
 - Accessibility is required.
 - Use `next/image` for images.
+- Name static brand assets with clean descriptive kebab-case slugs; never commit generated export/import suffixes or hashes (e.g. `selected-ingredients.png`, not `selected-ingredients-1f67ef.png`).
+- Keep internal identifiers in English: DOM `id` attributes, anchor hashes (`href="#..."`), `aria-label` technical values, and prop values (e.g. `id="flavors"`, `prevLabel="Previous flavors"`). User-visible business copy (button labels, section titles, descriptions, alt texts) stays in the business language (Spanish).
 - Use `next/font` for fonts.
 - Do not use temporary Figma URLs in production.
 - Run lint, typecheck, and build before finishing structural changes.
