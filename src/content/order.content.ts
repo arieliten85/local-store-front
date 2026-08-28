@@ -49,7 +49,7 @@ export const orderContent = {
   buyLabel: "COMPRAR",
   addressField: {
     label: "Dirección de envío",
-    placeholder: "Av. San Martín 1234, Alejandro Korn",
+    placeholder: "Ej: Av. San Martín 1234, Alejandro Korn",
     helper: "Envío gratuito exclusivo en Alejandro Korn (radio 3km).",
     requiredMessage: "Ingresá tu dirección para continuar.",
   },

@@ -32,10 +32,7 @@ export function Header({ name, logo, navigation, note, cta }: HeaderProps) {
             <span className="font-heading text-xl font-semibold">{name}</span>
           )}
         </a>
-        <nav
-          aria-label="Main"
-          className="hidden items-center gap-6 lg:flex"
-        >
+        <nav aria-label="Main" className="hidden items-center gap-6 lg:flex">
           {navigation.map((item) => (
             <a
               key={item.href}

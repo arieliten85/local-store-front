@@ -9,6 +9,7 @@
   --surface-foreground: #e7e2da;
   --muted: #2a261d;
   --muted-foreground: #d1c5b2;
+  --placeholder: #847b6f;
   --accent: #ebc166;
   --accent-foreground: #14130f;
   --border: #4e4637;
@@ -50,6 +51,7 @@
   --color-surface-foreground: var(--surface-foreground);
   --color-muted: var(--muted);
   --color-muted-foreground: var(--muted-foreground);
+  --color-placeholder: var(--placeholder);
   --color-accent: var(--accent);
   --color-accent-foreground: var(--accent-foreground);
   --color-border: var(--border);

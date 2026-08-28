@@ -1,14 +1,23 @@
 "use client";
 
 import { useRef, type ReactNode } from "react";
+import { cn } from "@/lib/class-names";
 
 type CarouselProps = {
   children: ReactNode;
   prevLabel: string;
   nextLabel: string;
+  viewportClassName?: string;
+  controlsClassName?: string;
 };
 
-export function Carousel({ children, prevLabel, nextLabel }: CarouselProps) {
+export function Carousel({
+  children,
+  prevLabel,
+  nextLabel,
+  viewportClassName,
+  controlsClassName,
+}: CarouselProps) {
   const scrollRef = useRef<HTMLDivElement>(null);
 
   const scrollByCard = (direction: "prev" | "next") => {
@@ -17,7 +26,11 @@ export function Carousel({ children, prevLabel, nextLabel }: CarouselProps) {
     const firstItem = container.querySelector<HTMLElement>(
       "[data-carousel-item]",
     );
-    const step = firstItem ? firstItem.offsetWidth + 32 : container.clientWidth;
+    const nextItem = firstItem?.nextElementSibling as HTMLElement | null;
+    const step =
+      firstItem && nextItem
+        ? nextItem.offsetLeft - firstItem.offsetLeft
+        : container.clientWidth;
     container.scrollBy({
       left: direction === "next" ? step : -step,
       behavior: "smooth",
@@ -34,7 +47,11 @@ export function Carousel({ children, prevLabel, nextLabel }: CarouselProps) {
         stroke="currentColor"
         strokeWidth={2}
       >
-        <path strokeLinecap="round" strokeLinejoin="round" d="M15 19l-7-7 7-7" />
+        <path
+          strokeLinecap="round"
+          strokeLinejoin="round"
+          d="M15 19l-7-7 7-7"
+        />
       </svg>
     ) : (
       <svg
@@ -53,16 +70,24 @@ export function Carousel({ children, prevLabel, nextLabel }: CarouselProps) {
     <div>
       <div
         ref={scrollRef}
-        className="flex gap-8 overflow-x-auto scroll-smooth snap-x snap-mandatory [scrollbar-width:none] [&::-webkit-scrollbar]:hidden"
+        className={cn(
+          "flex snap-x snap-mandatory [scrollbar-width:none] gap-8 overflow-x-auto scroll-smooth [&::-webkit-scrollbar]:hidden",
+          viewportClassName,
+        )}
       >
         {children}
       </div>
-      <div className="mt-6 flex justify-center gap-4 sm:justify-end">
+      <div
+        className={cn(
+          "mt-6 flex justify-center gap-4 sm:justify-end",
+          controlsClassName,
+        )}
+      >
         <button
           type="button"
           aria-label={prevLabel}
           onClick={() => scrollByCard("prev")}
-          className="border-current inline-flex h-10 w-10 items-center justify-center rounded-full border transition-colors hover:bg-surface/40 focus-visible:outline-3 focus-visible:outline-offset-3 focus-visible:outline-accent"
+          className="hover:bg-surface/40 focus-visible:outline-accent inline-flex h-10 w-10 items-center justify-center rounded-full border border-current transition-colors focus-visible:outline-3 focus-visible:outline-offset-3"
         >
           {chevron("prev")}
         </button>
@@ -70,7 +95,7 @@ export function Carousel({ children, prevLabel, nextLabel }: CarouselProps) {
           type="button"
           aria-label={nextLabel}
           onClick={() => scrollByCard("next")}
-          className="border-current inline-flex h-10 w-10 items-center justify-center rounded-full border transition-colors hover:bg-surface/40 focus-visible:outline-3 focus-visible:outline-offset-3 focus-visible:outline-accent"
+          className="hover:bg-surface/40 focus-visible:outline-accent inline-flex h-10 w-10 items-center justify-center rounded-full border border-current transition-colors focus-visible:outline-3 focus-visible:outline-offset-3"
         >
           {chevron("next")}
         </button>

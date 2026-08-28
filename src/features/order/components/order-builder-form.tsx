@@ -221,7 +221,7 @@ export function OrderBuilderForm({
             value={order.address}
             onChange={(event) => updateField("address", event.target.value)}
             placeholder={content.addressField.placeholder}
-            className="border-border bg-card-product focus-visible:outline-accent text-card-foreground placeholder:text-muted-foreground min-h-11 w-full rounded-md border px-4 py-2.5 text-sm focus-visible:outline-3 focus-visible:outline-offset-2"
+            className="border-border bg-card-product focus-visible:outline-accent text-card-foreground placeholder:text-placeholder min-h-11 w-full rounded-md border px-4 py-2.5 text-sm focus-visible:outline-3 focus-visible:outline-offset-2"
           />
           <p className="text-muted-foreground mt-1.5 flex items-start gap-2 text-xs leading-5">
             <span aria-hidden="true" className="mt-0.5">

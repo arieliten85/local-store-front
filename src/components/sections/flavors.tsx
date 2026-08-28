@@ -16,7 +16,7 @@ export function Flavors({ title, description, items }: FlavorsProps) {
             <article
               key={item.name}
               data-carousel-item
-              className="w-[78%] snap-start shrink-0 rounded-card-sm bg-card-product overflow-hidden shadow-sm sm:w-[45%] md:w-[32%] lg:w-[24%]"
+              className="rounded-card-sm bg-card-product w-[78%] shrink-0 snap-start overflow-hidden shadow-sm sm:w-[45%] md:w-[32%] lg:w-[24%]"
             >
               <div className="bg-card-product-muted relative aspect-[508/512]">
                 <Image

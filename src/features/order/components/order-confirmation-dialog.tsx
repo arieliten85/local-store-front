@@ -77,7 +77,7 @@ export function OrderConfirmationDialog({
       ref={dialogRef}
       aria-labelledby={titleId}
       onClose={() => onOpenChange(false)}
-      className="bg-card text-card-foreground sm:border-border m-0 max-h-[88dvh] w-full overflow-hidden shadow-lg sm:top-0 sm:right-0 sm:bottom-0 sm:left-auto sm:m-0 sm:h-full sm:max-h-none sm:w-[26rem] sm:rounded-none sm:border-l"
+      className="bg-card text-card-foreground rounded-card-sm sm:border-border fixed top-1/2 left-1/2 m-0 max-h-[88dvh] w-[calc(100%-2rem)] max-w-md -translate-x-1/2 -translate-y-1/2 overflow-hidden shadow-lg sm:top-0 sm:right-0 sm:bottom-0 sm:left-auto sm:m-0 sm:h-full sm:max-h-none sm:w-[26rem] sm:max-w-none sm:translate-x-0 sm:translate-y-0 sm:rounded-none sm:border-l"
     >
       <div className="flex max-h-[88dvh] flex-col sm:h-full sm:max-h-none">
         <header className="border-border flex items-start justify-between gap-4 border-b px-6 py-5">

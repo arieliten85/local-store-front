@@ -112,7 +112,10 @@ export function Footer({
             © {new Date().getFullYear()} {name}. {content.copyright}
           </p>
           {content.legalLinks.length > 0 ? (
-            <nav aria-label="Legal" className="flex flex-wrap justify-center gap-5">
+            <nav
+              aria-label="Legal"
+              className="flex flex-wrap justify-center gap-5"
+            >
               {content.legalLinks.map((item) => (
                 <a
                   key={item.href}

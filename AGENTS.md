@@ -35,6 +35,7 @@ Componentes controlan implementación.
 - Generic UI does not know business context.
 - Do not add dependencies when Next, React, or Web APIs solve the problem correctly.
 - Do not create speculative abstractions.
+- Reuse existing components and patterns before creating new ones; extract a shared component only when it serves more than one concrete use case.
 - Do not create a page builder, CMS, multi-tenant system, or monorepo.
 - Do not implement a backend yet.
 - Keep important SEO server-rendered.

@@ -31,7 +31,7 @@ export function OrderBuilder({
     <section
       id="reserve"
       aria-labelledby="order-builder-title"
-      className="bg-surface py-section-sm lg:py-7"
+      className="bg-surface py-section-md"
     >
       <Container>
         <h2
