@@ -29,6 +29,11 @@ export type OrderSize = {
   note?: string;
 };
 
+export type OrderLineItem = {
+  sizeId: OrderSize["id"];
+  quantity: number;
+};
+
 export type DeliveryDate = {
   id: string;
   label: string;
@@ -52,8 +57,13 @@ export type OrderDelivery = {
 };
 
 export type OrderState = {
-  size: OrderSize["id"] | null;
+  items: OrderLineItem[];
   deliveryDate: DeliveryDate["id"] | null;
   deliverySlot: DeliverySlot["id"] | null;
   address: string;
+  betweenStreets: string;
+  floor: string;
+  reference: string;
+  customerName: string;
+  phone: string;
 };

@@ -19,6 +19,7 @@ import type { OrderContent } from "@/content/content.types";
 type OrderConfirmationDialogProps = {
   open: boolean;
   onOpenChange: (open: boolean) => void;
+  onBack?: () => void;
   order: OrderState;
   sizes: OrderSize[];
   dates: DeliveryDate[];
@@ -31,6 +32,7 @@ type OrderConfirmationDialogProps = {
 export function OrderConfirmationDialog({
   open,
   onOpenChange,
+  onBack,
   order,
   sizes,
   dates,
@@ -40,6 +42,7 @@ export function OrderConfirmationDialog({
   content,
 }: OrderConfirmationDialogProps) {
   const dialogRef = useRef<HTMLDialogElement>(null);
+  const suppressCloseRef = useRef(false);
 
   useEffect(() => {
     const dialog = dialogRef.current;
@@ -47,11 +50,12 @@ export function OrderConfirmationDialog({
     if (open && !dialog.open) {
       dialog.showModal();
     } else if (!open && dialog.open) {
+      suppressCloseRef.current = true;
       dialog.close();
     }
   }, [open]);
 
-  const { rows, total } = formatOrderSummary({
+  const { productLines, productSubtotal, rows, total } = formatOrderSummary({
     order,
     sizes,
     dates,
@@ -76,7 +80,13 @@ export function OrderConfirmationDialog({
     <dialog
       ref={dialogRef}
       aria-labelledby={titleId}
-      onClose={() => onOpenChange(false)}
+      onClose={() => {
+        if (suppressCloseRef.current) {
+          suppressCloseRef.current = false;
+          return;
+        }
+        onOpenChange(false);
+      }}
       className="bg-card text-card-foreground rounded-card-sm sm:border-border fixed top-1/2 left-1/2 m-0 max-h-[88dvh] w-[calc(100%-2rem)] max-w-md -translate-x-1/2 -translate-y-1/2 overflow-hidden shadow-lg sm:top-0 sm:right-0 sm:bottom-0 sm:left-auto sm:m-0 sm:h-full sm:max-h-none sm:w-[26rem] sm:max-w-none sm:translate-x-0 sm:translate-y-0 sm:rounded-none sm:border-l"
     >
       <div className="flex max-h-[88dvh] flex-col sm:h-full sm:max-h-none">
@@ -113,6 +123,35 @@ export function OrderConfirmationDialog({
         </header>
 
         <div className="border-border divide-border divide-y overflow-y-auto px-6 py-4">
+          {productLines.length > 0 ? (
+            <div className="border-border divide-border divide-y border-b py-2">
+              {productLines.map((line, index) => (
+                <div
+                  key={line.id}
+                  className="flex items-baseline justify-between gap-4 py-2.5"
+                >
+
+                  <span className="text-card-foreground text-sm font-medium">
+                    {line.quantity} {line.quantity === 1 ? "Tabla" : "Tablas"} - {line.label}
+                  </span>
+                  <span className="text-muted-foreground text-right text-sm tabular-nums">
+                    {line.value}
+                  </span>
+                </div>
+              ))}
+              {productSubtotal !== null ? (
+                <div className="flex items-baseline justify-between gap-4 pt-2">
+                  <span className="text-card-foreground text-sm font-semibold">
+                    {dialog.subtotalLabel}
+                  </span>
+                  <span className="text-card-foreground text-right text-sm font-semibold tabular-nums">
+                    {productSubtotal}
+                  </span>
+                </div>
+              ) : null}
+            </div>
+          ) : null}
+
           {rows.map((row) => (
             <div
               key={row.id}
@@ -139,7 +178,7 @@ export function OrderConfirmationDialog({
         </div>
 
         <footer className="border-border mt-auto border-t px-6 py-5">
-          <p className="text-muted-foreground text-sm leading-6">
+          <p className="text-muted-foreground text-[11px] leading-4">
             {dialog.footnote}
           </p>
           <div className="mt-5 flex flex-col gap-3">
@@ -153,7 +192,7 @@ export function OrderConfirmationDialog({
             </Button>
             <Button
               variant="secondary"
-              onClick={() => onOpenChange(false)}
+              onClick={() => (onBack ? onBack() : onOpenChange(false))}
               className="w-full"
             >
               {dialog.backLabel}

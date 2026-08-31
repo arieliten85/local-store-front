@@ -15,8 +15,6 @@ import { orderContent } from "@/content/order.content";
 import { faqContent } from "@/content/faq.content";
 import { footerContent } from "@/content/footer.content";
 import {
-  deliveryDates,
-  deliverySlots,
   orderDelivery,
   orderSizes,
   orderWhatsAppNumber,
@@ -42,8 +40,6 @@ export default function Home() {
         <Flavors {...catalogContent} />
         <OrderBuilder
           sizes={orderSizes}
-          dates={deliveryDates}
-          slots={deliverySlots}
           delivery={orderDelivery}
           whatsappNumber={orderWhatsAppNumber}
           content={orderContent}

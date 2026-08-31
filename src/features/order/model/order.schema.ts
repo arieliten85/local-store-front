@@ -45,8 +45,13 @@ export const deliverySlotSchema = z.object({
   note: z.string().optional(),
 });
 
+export const orderLineItemSchema = z.object({
+  sizeId: z.string().min(1),
+  quantity: z.number().int().positive(),
+});
+
 export const orderStateSchema = z.object({
-  size: z.string().min(1).nullable(),
+  items: z.array(orderLineItemSchema).min(1),
   deliveryDate: z.string().min(1).nullable(),
   deliverySlot: z.string().min(1).nullable(),
   address: z.string(),

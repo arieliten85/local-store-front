@@ -1,0 +1,1 @@
+export const deliveryHours = "20:00 - 23:00 hs";

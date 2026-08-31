@@ -6,6 +6,7 @@ import type {
   OrderState,
 } from "../model/order.types";
 import type { OrderContent } from "@/content/content.types";
+import { computeOrderTotals } from "./order-totals";
 
 export function formatPrice(amount: number): string {
   const integer = Math.round(amount).toString();
@@ -17,6 +18,13 @@ export type OrderSummaryRow = {
   id: string;
   label: string;
   value: string;
+};
+
+export type OrderSummaryLine = {
+  id: string;
+  label: string;
+  value: string;
+  quantity: number;
 };
 
 type FormatOrderSummaryParams = {
@@ -36,20 +44,32 @@ export function formatOrderSummary({
   delivery,
   content,
 }: FormatOrderSummaryParams): {
+  productLines: OrderSummaryLine[];
+  productSubtotal: string | null;
   rows: OrderSummaryRow[];
   total: string | null;
 } {
   const dialog = content.dialog;
-  const rows: OrderSummaryRow[] = [];
+  const productLines: OrderSummaryLine[] = [];
 
-  const size = sizes.find((item) => item.id === order.size);
-  if (size) {
-    rows.push({
-      id: "size",
-      label: dialog.sizeLabel,
-      value: `${content.productName} · ${size.label}`,
+  const totals = computeOrderTotals(order.items, sizes);
+
+  for (const item of order.items) {
+    const size = sizes.find((candidate) => candidate.id === item.sizeId);
+    if (!size) continue;
+    const lineTotal = size.price * item.quantity;
+    productLines.push({
+      id: `size-${item.sizeId}`,
+      label: `${size.label}`,
+      value: formatPrice(lineTotal),
+      quantity: item.quantity,
     });
   }
+
+  const productSubtotal =
+    totals.totalPrice > 0 ? formatPrice(totals.totalPrice) : null;
+
+  const rows: OrderSummaryRow[] = [];
 
   const date = dates.find((item) => item.id === order.deliveryDate);
   if (date) {
@@ -69,6 +89,46 @@ export function formatOrderSummary({
     });
   }
 
+  if (order.betweenStreets.trim().length > 0) {
+    rows.push({
+      id: "betweenStreets",
+      label: dialog.betweenStreetsLabel,
+      value: order.betweenStreets,
+    });
+  }
+
+  if (order.floor.trim().length > 0) {
+    rows.push({
+      id: "floor",
+      label: dialog.floorLabel,
+      value: order.floor,
+    });
+  }
+
+  if (order.reference.trim().length > 0) {
+    rows.push({
+      id: "reference",
+      label: dialog.referenceLabel,
+      value: order.reference,
+    });
+  }
+
+  if (order.customerName.trim().length > 0) {
+    rows.push({
+      id: "customerName",
+      label: dialog.customerNameLabel,
+      value: order.customerName,
+    });
+  }
+
+  if (order.phone.trim().length > 0) {
+    rows.push({
+      id: "phone",
+      label: dialog.phoneLabel,
+      value: order.phone,
+    });
+  }
+
   rows.push({
     id: "delivery",
     label: dialog.deliveryLabel,
@@ -78,13 +138,7 @@ export function formatOrderSummary({
         : formatPrice(delivery.price),
   });
 
-  rows.push({
-    id: "coverage",
-    label: dialog.coverageLabel,
-    value: dialog.coverageValue,
-  });
+  const total = totals.totalPrice > 0 ? formatPrice(totals.totalPrice) : null;
 
-  const total = size ? formatPrice(size.price) : null;
-
-  return { rows, total };
+  return { productLines, productSubtotal, rows, total };
 }

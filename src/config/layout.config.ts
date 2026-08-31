@@ -1,4 +1,6 @@
+import { deliveryHours } from "@/content/delivery.content";
 import type { LayoutConfig } from "./config.types";
+ 
 
 export const layoutConfig = {
   navigation: [
@@ -7,6 +9,8 @@ export const layoutConfig = {
     { label: "Cómo funciona", href: "#process" },
     { label: "FAQ", href: "#faq" },
   ],
-  note: "Entregas vie. y sáb. · 18–21 h",
+
+  note: `Entregas vie. y sáb. · ${deliveryHours}`,
+
   cta: { label: "Reservar", href: "#reserve" },
 } satisfies LayoutConfig;

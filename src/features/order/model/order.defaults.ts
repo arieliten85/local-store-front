@@ -5,8 +5,13 @@ export const emptyOrderDraft = {
 } satisfies OrderDraft;
 
 export const emptyOrderState = {
-  size: null,
+  items: [],
   deliveryDate: null,
   deliverySlot: null,
   address: "",
+  betweenStreets: "",
+  floor: "",
+  reference: "",
+  customerName: "",
+  phone: "",
 } satisfies OrderState;

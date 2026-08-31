@@ -3,48 +3,49 @@
 import { useState } from "react";
 import { Button } from "@/components/ui/button";
 import type { OrderContent } from "@/content/content.types";
-import { cn } from "@/lib/class-names";
-import { isOrderComplete } from "../lib/is-order-complete";
+import { useOrderSchedule } from "../hooks/use-order-schedule";
 import { formatPrice } from "../lib/format-order-summary";
+import {
+  canAddSize,
+  computeOrderTotals,
+} from "../lib/order-totals";
 import { emptyOrderState } from "../model/order.defaults";
 import type {
-  DeliveryDate,
-  DeliverySlot,
   OrderDelivery,
   OrderSize,
   OrderState,
 } from "../model/order.types";
 import { OrderConfirmationDialog } from "./order-confirmation-dialog";
+import { OrderStepDateDialog } from "./order-step-date-dialog";
+import { OrderStepAddressDialog } from "./order-step-address-dialog";
+import { OrderStepCustomerDialog } from "./order-step-customer-dialog";
 
 type OrderBuilderFormProps = {
   sizes: OrderSize[];
-  dates: DeliveryDate[];
-  slots: DeliverySlot[];
   delivery: OrderDelivery;
   whatsappNumber: string;
   content: OrderContent;
 };
 
-type OptionStatusLabel = {
-  note: string;
-  className: string;
-};
+type ActiveStep = "date" | "address" | "customer" | "summary" | null;
 
 export function OrderBuilderForm({
   sizes,
-  dates,
-  slots,
   delivery,
   whatsappNumber,
   content,
 }: OrderBuilderFormProps) {
-  const [order, setOrder] = useState<OrderState>(() => ({
-    ...emptyOrderState,
-    size: sizes.find((size) => size.status === "recommended")?.id ?? null,
-    deliveryDate: dates.find((date) => date.status !== "soldOut")?.id ?? null,
-    deliverySlot: slots.find((slot) => slot.status !== "soldOut")?.id ?? null,
-  }));
-  const [dialogOpen, setDialogOpen] = useState(false);
+  const { dates, slots } = useOrderSchedule();
+  const [order, setOrder] = useState<OrderState>(() => {
+    const recommended = sizes.find((size) => size.status === "recommended");
+    return {
+      ...emptyOrderState,
+      items: recommended ? [{ sizeId: recommended.id, quantity: 1 }] : [],
+      deliveryDate: null,
+      deliverySlot: null,
+    };
+  });
+  const [activeStep, setActiveStep] = useState<ActiveStep>(null);
 
   const updateField = <K extends keyof OrderState>(
     key: K,
@@ -53,35 +54,45 @@ export function OrderBuilderForm({
     setOrder((current) => ({ ...current, [key]: value }));
   };
 
-  const complete = isOrderComplete(order);
-
-  const statusLabel = (
-    status: OrderSize["status"],
-    note?: string,
-  ): OptionStatusLabel => {
-    if (status === "soldOut") {
-      return {
-        note: content.availabilityNotes.soldOut,
-        className: "text-status-danger",
-      };
-    }
-    if (note) {
-      return { note, className: "text-accent" };
-    }
-    return {
-      note: content.availabilityNotes.available,
-      className: "text-status-success",
-    };
+  const setSizeQuantity = (sizeId: string, quantity: number) => {
+    setOrder((current) => {
+      const exists = current.items.some((item) => item.sizeId === sizeId);
+      if (exists) {
+        return {
+          ...current,
+          items: current.items
+            .map((item) =>
+              item.sizeId === sizeId ? { ...item, quantity } : item,
+            )
+            .filter((item) => item.quantity > 0),
+        };
+      }
+      return { ...current, items: [...current.items, { sizeId, quantity }] };
+    });
   };
 
-  const stepLabelClass =
-    "text-muted-foreground text-xs font-semibold tracking-[0.18em] uppercase";
+  const totals = computeOrderTotals(order.items, sizes);
+
+  const openDateStep = () => {
+    if (order.deliveryDate === null || order.deliverySlot === null) {
+      updateField(
+        "deliveryDate",
+        dates.find((date) => date.status !== "soldOut")?.id ?? null,
+      );
+      updateField(
+        "deliverySlot",
+        slots.find((slot) => slot.status !== "soldOut")?.id ?? null,
+      );
+    }
+    setActiveStep("date");
+  };
 
   return (
     <div className="space-y-5 lg:space-y-4">
       <OrderConfirmationDialog
-        open={dialogOpen}
-        onOpenChange={setDialogOpen}
+        open={activeStep === "summary"}
+        onOpenChange={(open) => setActiveStep(open ? "summary" : null)}
+        onBack={() => setActiveStep("customer")}
         order={order}
         sizes={sizes}
         dates={dates}
@@ -91,154 +102,157 @@ export function OrderBuilderForm({
         content={content}
       />
 
+      <OrderStepDateDialog
+        open={activeStep === "date"}
+        onOpenChange={(open) => setActiveStep(open ? "date" : null)}
+        onContinue={() => setActiveStep("address")}
+        onBack={() => setActiveStep(null)}
+        order={order}
+        updateField={updateField}
+        dates={dates}
+        slots={slots}
+        content={content}
+      />
+
+      <OrderStepAddressDialog
+        open={activeStep === "address"}
+        onOpenChange={(open) => setActiveStep(open ? "address" : null)}
+        onContinue={() => setActiveStep("customer")}
+        onBack={() => setActiveStep("date")}
+        order={order}
+        updateField={updateField}
+        content={content}
+      />
+
+      <OrderStepCustomerDialog
+        open={activeStep === "customer"}
+        onOpenChange={(open) => setActiveStep(open ? "customer" : null)}
+        onContinue={() => setActiveStep("summary")}
+        onBack={() => setActiveStep("address")}
+        order={order}
+        updateField={updateField}
+        content={content}
+      />
+
       <fieldset>
-        <legend className={stepLabelClass}>{content.steps.size.label}</legend>
+        <legend className="text-muted-foreground text-xs font-semibold tracking-[0.18em] uppercase">
+          {content.steps.size.label}
+        </legend>
         <div className="mt-2.5 grid gap-2">
           {sizes.map((size) => {
-            const selected = order.size === size.id;
+            const quantity =
+              order.items.find((item) => item.sizeId === size.id)?.quantity ??
+              0;
             const soldOut = size.status === "soldOut";
+            const addDisabled =
+              soldOut || !canAddSize(totals, size);
             return (
-              <label key={size.id} className="block cursor-pointer">
-                <input
-                  type="radio"
-                  name="order-size"
-                  value={size.id}
-                  checked={selected}
-                  disabled={soldOut}
-                  onChange={() => updateField("size", size.id)}
-                  className="peer sr-only"
-                />
-                <span className="border-border bg-card-product peer-checked:border-accent peer-focus-visible:outline-accent relative flex min-h-16 items-center justify-between gap-4 rounded-md border px-4 py-2.5 transition-colors peer-focus-visible:outline-3 peer-focus-visible:outline-offset-3 peer-disabled:cursor-not-allowed peer-disabled:opacity-50 lg:min-h-14 lg:py-2">
-                  <span className="flex flex-col gap-1">
-                    <span className="font-heading text-card-foreground text-lg font-medium">
-                      {size.label}
-                    </span>
-                    <span className="text-muted-foreground text-sm">
-                      {formatPrice(size.price)}
-                    </span>
+              <div
+                key={size.id}
+                className="border-border bg-card-product flex min-h-16 items-center justify-between gap-4 rounded-md border px-4 py-2.5 lg:min-h-14 lg:py-2"
+              >
+                <div className="flex flex-col gap-1">
+                  <span className="font-heading text-card-foreground flex items-center gap-2 text-lg font-medium">
+                    {size.label}
+                    {size.status === "recommended" ? (
+                      <span className="bg-accent text-accent-foreground rounded-full px-3 py-1 text-[10px] font-bold uppercase">
+                        {content.recommendedBadge}
+                      </span>
+                    ) : null}
                   </span>
-                  <span
-                    className={cn(
-                      "flex size-5 items-center justify-center rounded-full border-2 transition-colors",
-                      selected ? "border-accent" : "border-border",
-                    )}
+                  <span className="text-muted-foreground text-sm">
+                    {formatPrice(size.price)}
+                  </span>
+                </div>
+                <div className="flex items-center gap-3">
+                  <button
+                    type="button"
+                    aria-label={`${content.wizard.removeLabel} ${size.label}`}
+                    disabled={quantity === 0 || soldOut}
+                    onClick={() => setSizeQuantity(size.id, quantity - 1)}
+                    className="border-border text-card-foreground hover:border-accent hover:text-accent focus-visible:outline-accent disabled:border-border/60 disabled:text-muted-foreground/50 inline-flex size-9 shrink-0 items-center justify-center rounded-full border text-lg leading-none focus-visible:outline-3 focus-visible:outline-offset-3"
                   >
-                    <span
-                      className={cn(
-                        "bg-accent size-2.5 rounded-full transition-transform",
-                        selected ? "scale-100" : "scale-0",
-                      )}
-                    />
+                    <svg
+                      aria-hidden="true"
+                      className="h-4 w-4"
+                      fill="none"
+                      viewBox="0 0 24 24"
+                      stroke="currentColor"
+                      strokeWidth={2}
+                    >
+                      <path
+                        strokeLinecap="round"
+                        strokeLinejoin="round"
+                        d="M5 12h14"
+                      />
+                    </svg>
+                  </button>
+                  <span
+                    className="text-card-foreground w-6 text-center text-base font-semibold tabular-nums"
+                    aria-live="polite"
+                  >
+                    {quantity}
                   </span>
-                  {size.status === "recommended" ? (
-                    <span className="bg-accent text-accent-foreground absolute -top-2.5 right-4 rounded-full px-3 py-1 text-[10px] font-bold uppercase">
-                      {content.recommendedBadge}
-                    </span>
-                  ) : null}
-                </span>
-              </label>
+                  <button
+                    type="button"
+                    aria-label={`${content.wizard.addLabel} ${size.label}`}
+                    disabled={addDisabled}
+                    onClick={() => setSizeQuantity(size.id, quantity + 1)}
+                    className="border-border text-card-foreground hover:border-accent hover:text-accent focus-visible:outline-accent inline-flex size-9 shrink-0 items-center justify-center rounded-full border text-lg leading-none focus-visible:outline-3 focus-visible:outline-offset-3 disabled:cursor-not-allowed disabled:border-border/60 disabled:text-muted-foreground/50"
+                  >
+                    <svg
+                      aria-hidden="true"
+                      className="h-4 w-4"
+                      fill="none"
+                      viewBox="0 0 24 24"
+                      stroke="currentColor"
+                      strokeWidth={2}
+                    >
+                      <path
+                        strokeLinecap="round"
+                        strokeLinejoin="round"
+                        d="M12 5v14M5 12h14"
+                      />
+                    </svg>
+                  </button>
+                </div>
+              </div>
             );
           })}
         </div>
-      </fieldset>
-
-      <fieldset>
-        <legend className={stepLabelClass}>{content.steps.date.label}</legend>
-        <div className="mt-2.5 grid grid-cols-2 gap-2.5">
-          {dates.map((date) => {
-            const selected = order.deliveryDate === date.id;
-            const soldOut = date.status === "soldOut";
-            const availability = statusLabel(date.status, date.note);
-            return (
-              <label key={date.id} className="block cursor-pointer">
-                <input
-                  type="radio"
-                  name="order-date"
-                  value={date.id}
-                  checked={selected}
-                  disabled={soldOut}
-                  onChange={() => updateField("deliveryDate", date.id)}
-                  className="peer sr-only"
-                />
-                <span className="border-border bg-card-product peer-checked:border-accent peer-focus-visible:outline-accent grid min-h-14 gap-0.5 rounded-md border px-3 py-2 text-center transition-colors peer-focus-visible:outline-3 peer-focus-visible:outline-offset-3 peer-disabled:cursor-not-allowed peer-disabled:opacity-45 lg:min-h-12 lg:py-1.5">
-                  <span className="text-card-foreground text-sm font-semibold">
-                    {date.label}
-                  </span>
-                  <span className={availability.className}>
-                    <span className="text-xs">{availability.note}</span>
-                  </span>
-                </span>
-              </label>
-            );
-          })}
-        </div>
-      </fieldset>
-
-      <fieldset>
-        <legend className={stepLabelClass}>{content.steps.slot.label}</legend>
-        <div className="mt-2.5 grid grid-cols-3 gap-2">
-          {slots.map((slot) => {
-            const selected = order.deliverySlot === slot.id;
-            const soldOut = slot.status === "soldOut";
-            const availability = statusLabel(slot.status, slot.note);
-            return (
-              <label key={slot.id} className="block cursor-pointer">
-                <input
-                  type="radio"
-                  name="order-slot"
-                  value={slot.id}
-                  checked={selected}
-                  disabled={soldOut}
-                  onChange={() => updateField("deliverySlot", slot.id)}
-                  className="peer sr-only"
-                />
-                <span className="border-border bg-card-product peer-checked:border-accent peer-focus-visible:outline-accent grid min-h-14 gap-0.5 rounded-md border px-2 py-2 text-center transition-colors peer-focus-visible:outline-3 peer-focus-visible:outline-offset-3 peer-disabled:cursor-not-allowed peer-disabled:opacity-45 lg:min-h-12 lg:py-1.5">
-                  <span className="text-card-foreground text-sm font-semibold">
-                    {slot.label}
-                  </span>
-                  <span className={availability.className}>
-                    <span className="text-xs">{availability.note}</span>
-                  </span>
-                </span>
-              </label>
-            );
-          })}
-        </div>
-      </fieldset>
-
-      <fieldset>
-        <legend className={stepLabelClass}>
-          {content.steps.address.label}
-        </legend>
-        <div className="mt-2.5">
-          <label htmlFor="order-address" className="sr-only">
-            {content.addressField.label}
-          </label>
-          <input
-            id="order-address"
-            type="text"
-            required
-            value={order.address}
-            onChange={(event) => updateField("address", event.target.value)}
-            placeholder={content.addressField.placeholder}
-            className="border-border bg-card-product focus-visible:outline-accent text-card-foreground placeholder:text-placeholder min-h-11 w-full rounded-md border px-4 py-2.5 text-sm focus-visible:outline-3 focus-visible:outline-offset-2"
-          />
-          <p className="text-muted-foreground mt-1.5 flex items-start gap-2 text-xs leading-5">
-            <span aria-hidden="true" className="mt-0.5">
-              ⓘ
+        <p
+          aria-live="polite"
+          className="bg-card-product text-card-foreground mt-3 flex flex-col gap-3 rounded-md px-4 py-4"
+        >
+          <span className="flex items-end justify-between gap-4">
+            <span className="text-sm text-muted-foreground">
+              {content.wizard.totalLabel}
             </span>
-            <span>{content.addressField.helper}</span>
-          </p>
-        </div>
+            <span className="text-3xl font-bold leading-none tabular-nums tracking-tight">
+              {formatPrice(totals.totalPrice)}
+            </span>
+          </span>
+          <span className="flex items-center justify-between text-sm">
+            <span className="text-muted-foreground">
+              {content.wizard.totalPiecesLabel}
+            </span>
+            <span className="font-semibold tabular-nums">
+              {totals.totalPieces} {content.message.piecesLabel}
+            </span>
+          </span>
+          <span className="border-t border-border pt-2 text-xs text-muted-foreground">
+            {content.wizard.limitMessage}
+          </span>
+        </p>
       </fieldset>
 
       <div>
         <Button
-          disabled={!complete}
-          onClick={() => setDialogOpen(true)}
+          disabled={order.items.length === 0}
+          onClick={openDateStep}
           className="w-full tracking-[0.16em] uppercase shadow-md"
         >
-          {content.buyLabel}
+          {content.wizard.continueLabel}
         </Button>
       </div>
     </div>

@@ -9,7 +9,6 @@ export type ImageContent = {
 };
 
 export type HeroContent = {
-  eyebrow: string;
   title: string;
   description: string;
   image: {
@@ -22,8 +21,12 @@ export type HeroContent = {
     iconWidth: number;
     iconHeight: number;
   }>;
-  primaryAction: LinkContent;
-  secondaryAction: LinkContent;
+  coverage: {
+    label: string;
+    linkLabel: string;
+    href: string;
+  };
+  action: LinkContent;
 };
 
 export type TextCard = {
@@ -107,10 +110,19 @@ export type OrderStepContent = {
   label: string;
 };
 
+export type OrderOptionFieldContent = {
+  label: string;
+  placeholder?: string;
+  optionalHint?: string;
+  helper?: string;
+  requiredMessage?: string;
+};
+
 export type OrderContent = {
   heading: {
     title: string;
   };
+  reserveHeading: string;
   gallery: {
     label: string;
     viewLabel: string;
@@ -122,6 +134,7 @@ export type OrderContent = {
     date: OrderStepContent;
     slot: OrderStepContent;
     address: { label: string };
+    customer: { label: string };
   };
   productName: string;
   recommendedBadge: string;
@@ -129,20 +142,29 @@ export type OrderContent = {
     available: string;
     soldOut: string;
   };
+  cta: string;
   buyLabel: string;
-  addressField: {
-    label: string;
-    placeholder: string;
-    helper: string;
-    requiredMessage: string;
-  };
+  addressField: OrderOptionFieldContent & { requiredMessage: string };
+  betweenStreetsField: OrderOptionFieldContent;
+  floorField: OrderOptionFieldContent;
+  referenceField: OrderOptionFieldContent;
+  customerNameField: OrderOptionFieldContent & { requiredMessage: string };
+  phoneField: OrderOptionFieldContent;
   dialog: {
     title: string;
     subtitle: string;
     sizeLabel: string;
+    productLineLabelSingular: string;
+    productLineLabelPlural: string;
     dateLabel: string;
     slotLabel: string;
     addressLabel: string;
+    betweenStreetsLabel: string;
+    floorLabel: string;
+    referenceLabel: string;
+    customerNameLabel: string;
+    phoneLabel: string;
+    subtotalLabel: string;
     deliveryLabel: string;
     coverageLabel: string;
     totalLabel: string;
@@ -153,11 +175,37 @@ export type OrderContent = {
     confirmLabel: string;
     closeLabel: string;
   };
+  wizard: {
+    editLabel: string;
+    continueLabel: string;
+    backLabel: string;
+    stepDateTitle: string;
+    stepAddressTitle: string;
+    stepCustomerTitle: string;
+    stepSummaryTitle: string;
+    summaryButtonLabel: string;
+    totalPiecesLabel: string;
+    totalLabel: string;
+    addLabel: string;
+    removeLabel: string;
+    limitMessage: string;
+  };
   message: {
     greeting: string;
+    orderSection: string;
     sizeLabel: string;
-    scheduleLabel: string;
-    addressLabel: string;
+    dayLabel: string;
+    slotLabel: string;
     totalLabel: string;
+    piecesLabel: string;
+    deliverySection: string;
+    addressLabel: string;
+    betweenStreetsLabel: string;
+    floorLabel: string;
+    referenceLabel: string;
+    customerSection: string;
+    nameLabel: string;
+    phoneLabel: string;
+    closing: string;
   };
 };

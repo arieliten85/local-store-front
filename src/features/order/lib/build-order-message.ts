@@ -6,6 +6,7 @@ import type {
 } from "../model/order.types";
 import type { OrderContent } from "@/content/content.types";
 import { formatPrice } from "./format-order-summary";
+import { computeOrderTotals } from "./order-totals";
 
 type BuildOrderMessageParams = {
   order: OrderState;
@@ -22,21 +23,64 @@ export function buildOrderMessage({
   slots,
   content,
 }: BuildOrderMessageParams): string {
-  const size = sizes.find((item) => item.id === order.size);
   const date = dates.find((item) => item.id === order.deliveryDate);
   const slot = slots.find((item) => item.id === order.deliverySlot);
 
-  if (!size || !date || !slot) {
+  if (order.items.length === 0 || !date || !slot) {
     return "";
   }
 
+  const totals = computeOrderTotals(order.items, sizes);
   const lines = [
     content.message.greeting,
-    `${content.message.sizeLabel}: ${size.label}`,
-    `${content.message.scheduleLabel}: ${date.fullLabel}, ${slot.fullLabel}`,
-    `${content.message.addressLabel}: ${order.address}`,
-    `${content.message.totalLabel}: ${formatPrice(size.price)}`,
+    "",
+    `*${content.message.orderSection}*`,
   ];
+
+  for (const item of order.items) {
+    const size = sizes.find((candidate) => candidate.id === item.sizeId);
+    if (!size) continue;
+    lines.push(
+      `${content.message.sizeLabel}: ${item.quantity} × ${size.label} · ${formatPrice(
+        size.price * item.quantity,
+      )}`,
+    );
+  }
+
+  lines.push(
+    `${content.message.totalLabel}: ${totals.totalPieces} ${content.message.piecesLabel} · ${formatPrice(
+      totals.totalPrice,
+    )}`,
+    `${content.message.dayLabel}: ${date.fullLabel}`,
+    `${content.message.slotLabel}: ${slot.fullLabel}`,
+    "",
+    `*${content.message.deliverySection}*`,
+    `${content.message.addressLabel}: ${order.address}`,
+  );
+
+  if (order.betweenStreets.trim().length > 0) {
+    lines.push(`${content.message.betweenStreetsLabel}: ${order.betweenStreets}`);
+  }
+
+  if (order.floor.trim().length > 0) {
+    lines.push(`${content.message.floorLabel}: ${order.floor}`);
+  }
+
+  if (order.reference.trim().length > 0) {
+    lines.push(`${content.message.referenceLabel}: ${order.reference}`);
+  }
+
+  lines.push("");
+
+  lines.push(`*${content.message.customerSection}*`);
+  lines.push(`${content.message.nameLabel}: ${order.customerName}`);
+
+  if (order.phone.trim().length > 0) {
+    lines.push(`${content.message.phoneLabel}: ${order.phone}`);
+  }
+
+  lines.push("");
+  lines.push(content.message.closing);
 
   return lines.join("\n");
 }

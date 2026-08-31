@@ -3,16 +3,12 @@ import type { OrderContent } from "@/content/content.types";
 import { OrderBuilderForm } from "@/features/order/components/order-builder-form";
 import { OrderProductGallery } from "@/features/order/components/order-product-gallery";
 import type {
-  DeliveryDate,
-  DeliverySlot,
   OrderDelivery,
   OrderSize,
 } from "@/features/order/model/order.types";
 
 type OrderBuilderProps = {
   sizes: OrderSize[];
-  dates: DeliveryDate[];
-  slots: DeliverySlot[];
   delivery: OrderDelivery;
   whatsappNumber: string;
   content: OrderContent;
@@ -20,8 +16,6 @@ type OrderBuilderProps = {
 
 export function OrderBuilder({
   sizes,
-  dates,
-  slots,
   delivery,
   whatsappNumber,
   content,
@@ -53,8 +47,6 @@ export function OrderBuilder({
           <div className="rounded-card-sm bg-card p-4 shadow-md sm:p-5">
             <OrderBuilderForm
               sizes={sizes}
-              dates={dates}
-              slots={slots}
               delivery={delivery}
               whatsappNumber={whatsappNumber}
               content={content}
