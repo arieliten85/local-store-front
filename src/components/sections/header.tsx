@@ -23,11 +23,9 @@ export function Header({ name, logo, navigation, note, cta }: HeaderProps) {
             <Image
               src={logo.src}
               alt={logo.alt}
-              width={666}
-              height={375}
-              className="h-14 w-auto object-contain sm:h-16 lg:h-[5.35rem]"
-              priority
-            />
+              width={266}
+              height={175}
+              className="h-8 w-auto object-contain sm:h-10 lg:h-12" />
           ) : (
             <span className="font-heading text-xl font-semibold">{name}</span>
           )}

@@ -48,12 +48,17 @@ export function Hero({
           <h1 className="font-heading text-foreground max-w-4xl text-6xl leading-[0.9] font-semibold sm:text-7xl lg:text-8xl">
             {title}
           </h1>
+
           <p className="text-muted-foreground mt-5 max-w-xl text-base leading-7 sm:text-lg">
             {description}
           </p>
 
-          <div className="mt-8 flex flex-col gap-4 sm:flex-row sm:items-center">
+          <div className="mt-5 flex flex-col gap-4 sm:flex-row sm:items-center">
             <Button href={action.href}>{action.label}</Button>
+          </div>
+
+
+          <div className="mt-5 flex flex-col gap-4 sm:flex-row sm:items-center">
             <a
               href={coverage.href}
               target="_blank"

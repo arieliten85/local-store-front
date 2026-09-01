@@ -30,8 +30,8 @@ export function Footer({
                 alt={logo.alt}
                 width={666}
                 height={375}
-                className="h-auto w-44 object-contain"
-              />
+                className="h-8 w-auto object-contain sm:h-10 lg:h-12" />
+
             ) : (
               <p className="font-heading text-foreground text-xl">{name}</p>
             )}
