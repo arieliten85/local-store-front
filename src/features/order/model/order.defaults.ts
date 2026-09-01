@@ -14,4 +14,5 @@ export const emptyOrderState = {
   reference: "",
   customerName: "",
   phone: "",
+  paymentMethod: "cash",
 } satisfies OrderState;

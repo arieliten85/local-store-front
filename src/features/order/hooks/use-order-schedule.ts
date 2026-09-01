@@ -18,7 +18,7 @@ export type OrderSchedule = {
   slots: DeliverySlot[];
 };
 
-export function useOrderSchedule(): OrderSchedule {
+export function useOrderSchedule(soldOutNote?: string): OrderSchedule {
   // Snapshot the clock once per mount so the schedule stays stable while the
   // user fills the form. Deliberately not live-updating mid-session.
   const [now] = useState(() => new Date());
@@ -28,8 +28,8 @@ export function useOrderSchedule(): OrderSchedule {
     return {
       mode,
       now,
-      dates: computeOrderDates(now, soldOutDates),
+      dates: computeOrderDates(now, soldOutDates, soldOutNote),
       slots: computeOrderSlots(now, mode),
     };
-  }, [now]);
+  }, [now, soldOutNote]);
 }

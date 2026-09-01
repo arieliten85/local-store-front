@@ -11,7 +11,10 @@ type OrderStepAddressDialogProps = {
   onContinue: () => void;
   onBack?: () => void;
   order: OrderState;
-  updateField: <K extends keyof OrderState>(key: K, value: OrderState[K]) => void;
+  updateField: <K extends keyof OrderState>(
+    key: K,
+    value: OrderState[K],
+  ) => void;
   content: OrderContent;
 };
 
@@ -153,7 +156,9 @@ export function OrderStepAddressDialog({
                 id="order-reference-modal"
                 type="text"
                 value={order.reference}
-                onChange={(event) => updateField("reference", event.target.value)}
+                onChange={(event) =>
+                  updateField("reference", event.target.value)
+                }
                 placeholder={
                   content.referenceField.optionalHint
                     ? `${content.referenceField.placeholder} · ${content.referenceField.optionalHint}`

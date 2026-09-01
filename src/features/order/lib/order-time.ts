@@ -49,7 +49,8 @@ const MONTHS_LONG = [
  * Reservation-only model. Always returns "reserve" — there is no same-day
  * ordering mode anymore.
  */
-export function getOrderMode(_day: number): OrderMode {
+export function getOrderMode(day: number): OrderMode {
+  void day;
   return "reserve";
 }
 
@@ -88,13 +89,17 @@ function fullLabel(date: Date): string {
   return `${WEEKDAYS[date.getDay()]} ${date.getDate()} de ${MONTHS_LONG[date.getMonth()]}`;
 }
 
-function toDeliveryDate(date: Date, soldOut: boolean): DeliveryDate {
+function toDeliveryDate(
+  date: Date,
+  soldOut: boolean,
+  soldOutNote: string,
+): DeliveryDate {
   return {
     id: toId(date),
     label: shortLabel(date),
     fullLabel: fullLabel(date),
     status: soldOut ? "soldOut" : "available",
-    note: soldOut ? "Agotado" : undefined,
+    note: soldOut ? soldOutNote : undefined,
   };
 }
 
@@ -112,6 +117,7 @@ function toDeliveryDate(date: Date, soldOut: boolean): DeliveryDate {
 export function computeOrderDates(
   now: Date,
   soldOutDates: readonly string[] = [],
+  soldOutNote = "Agotado",
 ): DeliveryDate[] {
   const base = startOfDay(now);
   const day = base.getDay();
@@ -125,8 +131,8 @@ export function computeOrderDates(
 
   const soldOut = new Set(soldOutDates);
   return [
-    toDeliveryDate(friday, soldOut.has(toKey(friday))),
-    toDeliveryDate(saturday, soldOut.has(toKey(saturday))),
+    toDeliveryDate(friday, soldOut.has(toKey(friday)), soldOutNote),
+    toDeliveryDate(saturday, soldOut.has(toKey(saturday)), soldOutNote),
   ];
 }
 
@@ -146,7 +152,10 @@ export const SLOT_DEFS: SlotDef[] = [
  * Reservation offers every delivery slot; there is no per-slot cap yet, so the
  * client picks freely. This keeps the shape stable for future per-slot limits.
  */
-export function computeOrderSlots(_now: Date, _mode: OrderMode): DeliverySlot[] {
+export function computeOrderSlots(now: Date, mode: OrderMode): DeliverySlot[] {
+  void now;
+  void mode;
+
   return SLOT_DEFS.map((def) => ({
     id: `slot-${def.startHour}-${def.startHour + 1}`,
     label: def.label,

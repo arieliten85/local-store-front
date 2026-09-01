@@ -43,6 +43,9 @@ export const orderContent = {
     customer: {
       label: "5. DATOS DEL CLIENTE",
     },
+    payment: {
+      label: "6. MÉTODO DE PAGO",
+    },
   },
   productName: "Tabla Simple Sushi",
   recommendedBadge: "Recomendada",
@@ -81,8 +84,7 @@ export const orderContent = {
     label: "Teléfono",
     placeholder: "Ej: 11 2345 6789",
     optionalHint: "Opcional",
-    helper:
-      "Lo usamos solo si necesitamos avisarte algo sobre la entrega.",
+    helper: "Lo usamos solo si necesitamos avisarte algo sobre la entrega.",
   },
   dialog: {
     title: "Confirmá tu pedido",
@@ -98,8 +100,9 @@ export const orderContent = {
     referenceLabel: "Referencia",
     customerNameLabel: "Nombre",
     phoneLabel: "Teléfono",
+    paymentMethodLabel: "Método de pago",
     subtotalLabel: "Subtotal",
-    deliveryLabel: "Delivery",
+    deliveryLabel: "Envío",
     coverageLabel: "Cobertura",
     totalLabel: "TOTAL",
     freeDeliveryValue: "Gratis",
@@ -109,6 +112,8 @@ export const orderContent = {
     backLabel: "Volver y editar",
     confirmLabel: "Enviar pedido por WhatsApp",
     closeLabel: "Cerrar",
+    paymentMethodCashLabel: "Efectivo",
+    paymentMethodTransferLabel: "Transferencia",
   },
   wizard: {
     editLabel: "Editar",
@@ -117,6 +122,7 @@ export const orderContent = {
     stepDateTitle: "Fecha y horario",
     stepAddressTitle: "Dirección de envío",
     stepCustomerTitle: "Datos del cliente",
+    stepPaymentTitle: "Método de pago",
     stepSummaryTitle: "Confirmá tu pedido",
     summaryButtonLabel: "Enviar pedido por WhatsApp",
     totalPiecesLabel: "Total de piezas",
@@ -141,6 +147,7 @@ export const orderContent = {
     customerSection: "Cliente",
     nameLabel: "Nombre",
     phoneLabel: "Teléfono",
+    paymentLabel: "Método de pago",
     closing: "¿Podés confirmarme el pedido?",
   },
 } satisfies OrderContent;

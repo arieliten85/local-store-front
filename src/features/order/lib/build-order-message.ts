@@ -59,7 +59,9 @@ export function buildOrderMessage({
   );
 
   if (order.betweenStreets.trim().length > 0) {
-    lines.push(`${content.message.betweenStreetsLabel}: ${order.betweenStreets}`);
+    lines.push(
+      `${content.message.betweenStreetsLabel}: ${order.betweenStreets}`,
+    );
   }
 
   if (order.floor.trim().length > 0) {
@@ -78,6 +80,12 @@ export function buildOrderMessage({
   if (order.phone.trim().length > 0) {
     lines.push(`${content.message.phoneLabel}: ${order.phone}`);
   }
+
+  const paymentMethodLabel =
+    order.paymentMethod === "transfer"
+      ? content.dialog.paymentMethodTransferLabel
+      : content.dialog.paymentMethodCashLabel;
+  lines.push(`${content.message.paymentLabel}: ${paymentMethodLabel}`);
 
   lines.push("");
   lines.push(content.message.closing);

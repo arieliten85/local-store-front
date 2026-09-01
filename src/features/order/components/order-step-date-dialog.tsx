@@ -15,7 +15,10 @@ type OrderStepDateDialogProps = {
   onContinue: () => void;
   onBack?: () => void;
   order: OrderState;
-  updateField: <K extends keyof OrderState>(key: K, value: OrderState[K]) => void;
+  updateField: <K extends keyof OrderState>(
+    key: K,
+    value: OrderState[K],
+  ) => void;
   dates: DeliveryDate[];
   slots: DeliverySlot[];
   content: OrderContent;
@@ -73,7 +76,8 @@ export function OrderStepDateDialog({
   const stepLabelClass =
     "text-muted-foreground text-xs font-semibold tracking-[0.18em] uppercase";
   const titleId = "order-step-date-title";
-  const canContinue = order.deliveryDate !== null && order.deliverySlot !== null;
+  const canContinue =
+    order.deliveryDate !== null && order.deliverySlot !== null;
 
   return (
     <dialog
@@ -161,7 +165,6 @@ export function OrderStepDateDialog({
               {slots.map((slot) => {
                 const selected = order.deliverySlot === slot.id;
                 const soldOut = slot.status === "soldOut";
-                const availability = statusLabel(slot.status, slot.note);
                 return (
                   <label key={slot.id} className="block cursor-pointer">
                     <input

@@ -56,6 +56,8 @@ export type OrderDelivery = {
   coverageKm: number;
 };
 
+export type OrderPaymentMethod = "cash" | "transfer";
+
 export type OrderState = {
   items: OrderLineItem[];
   deliveryDate: DeliveryDate["id"] | null;
@@ -66,4 +68,5 @@ export type OrderState = {
   reference: string;
   customerName: string;
   phone: string;
+  paymentMethod: OrderPaymentMethod | null;
 };

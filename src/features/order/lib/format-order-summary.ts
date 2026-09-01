@@ -24,7 +24,6 @@ export type OrderSummaryLine = {
   id: string;
   label: string;
   value: string;
-  quantity: number;
 };
 
 type FormatOrderSummaryParams = {
@@ -58,11 +57,14 @@ export function formatOrderSummary({
     const size = sizes.find((candidate) => candidate.id === item.sizeId);
     if (!size) continue;
     const lineTotal = size.price * item.quantity;
+    const unitLabel =
+      item.quantity === 1
+        ? dialog.productLineLabelSingular
+        : dialog.productLineLabelPlural;
     productLines.push({
       id: `size-${item.sizeId}`,
-      label: `${size.label}`,
+      label: `${item.quantity} ${unitLabel} ${size.label}`,
       value: formatPrice(lineTotal),
-      quantity: item.quantity,
     });
   }
 
@@ -126,6 +128,17 @@ export function formatOrderSummary({
       id: "phone",
       label: dialog.phoneLabel,
       value: order.phone,
+    });
+  }
+
+  if (order.paymentMethod) {
+    rows.push({
+      id: "paymentMethod",
+      label: dialog.paymentMethodLabel,
+      value:
+        order.paymentMethod === "cash"
+          ? dialog.paymentMethodCashLabel
+          : dialog.paymentMethodTransferLabel,
     });
   }
 

@@ -135,6 +135,7 @@ export type OrderContent = {
     slot: OrderStepContent;
     address: { label: string };
     customer: { label: string };
+    payment: { label: string };
   };
   productName: string;
   recommendedBadge: string;
@@ -164,6 +165,7 @@ export type OrderContent = {
     referenceLabel: string;
     customerNameLabel: string;
     phoneLabel: string;
+    paymentMethodLabel: string;
     subtotalLabel: string;
     deliveryLabel: string;
     coverageLabel: string;
@@ -174,6 +176,8 @@ export type OrderContent = {
     backLabel: string;
     confirmLabel: string;
     closeLabel: string;
+    paymentMethodCashLabel: string;
+    paymentMethodTransferLabel: string;
   };
   wizard: {
     editLabel: string;
@@ -182,6 +186,7 @@ export type OrderContent = {
     stepDateTitle: string;
     stepAddressTitle: string;
     stepCustomerTitle: string;
+    stepPaymentTitle: string;
     stepSummaryTitle: string;
     summaryButtonLabel: string;
     totalPiecesLabel: string;
@@ -206,6 +211,7 @@ export type OrderContent = {
     customerSection: string;
     nameLabel: string;
     phoneLabel: string;
+    paymentLabel: string;
     closing: string;
   };
 };

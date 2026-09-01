@@ -5,7 +5,7 @@ import type { OrderState } from "../model/order.types";
 import { Button } from "@/components/ui/button";
 import type { OrderContent } from "@/content/content.types";
 
-type OrderStepCustomerDialogProps = {
+type OrderStepPaymentDialogProps = {
   open: boolean;
   onOpenChange: (open: boolean) => void;
   onContinue: () => void;
@@ -18,7 +18,9 @@ type OrderStepCustomerDialogProps = {
   content: OrderContent;
 };
 
-export function OrderStepCustomerDialog({
+const paymentOptionIds = ["cash", "transfer"] as const;
+
+export function OrderStepPaymentDialog({
   open,
   onOpenChange,
   onContinue,
@@ -26,7 +28,7 @@ export function OrderStepCustomerDialog({
   order,
   updateField,
   content,
-}: OrderStepCustomerDialogProps) {
+}: OrderStepPaymentDialogProps) {
   const dialogRef = useRef<HTMLDialogElement>(null);
   const suppressCloseRef = useRef(false);
 
@@ -41,8 +43,8 @@ export function OrderStepCustomerDialog({
     }
   }, [open]);
 
-  const titleId = "order-step-customer-title";
-  const canContinue = order.customerName.trim().length > 0;
+  const titleId = "order-step-payment-title";
+  const canContinue = order.paymentMethod !== null;
 
   return (
     <dialog
@@ -61,7 +63,7 @@ export function OrderStepCustomerDialog({
         <header className="border-border flex items-start justify-between gap-4 border-b px-6 py-5">
           <div>
             <h2 id={titleId} className="font-heading text-xl font-semibold">
-              {content.wizard.stepCustomerTitle}
+              {content.wizard.stepPaymentTitle}
             </h2>
           </div>
           <button
@@ -88,48 +90,37 @@ export function OrderStepCustomerDialog({
         </header>
 
         <div className="overflow-y-auto px-6 py-5">
-          <div className="space-y-3">
-            <div>
-              <label htmlFor="order-customer-name-modal" className="sr-only">
-                {content.customerNameField.label}
-              </label>
-              <input
-                id="order-customer-name-modal"
-                type="text"
-                required
-                value={order.customerName}
-                onChange={(event) =>
-                  updateField("customerName", event.target.value)
-                }
-                placeholder={content.customerNameField.placeholder}
-                className="border-border bg-card-product focus-visible:outline-accent text-card-foreground placeholder:text-placeholder min-h-11 w-full rounded-md border px-4 py-2.5 text-sm focus-visible:outline-3 focus-visible:outline-offset-2"
-              />
+          <fieldset>
+            <legend className="text-muted-foreground text-xs font-semibold tracking-[0.18em] uppercase">
+              {content.steps.payment.label}
+            </legend>
+            <div className="mt-2.5 grid gap-2.5">
+              {paymentOptionIds.map((id) => {
+                const selected = order.paymentMethod === id;
+                const label =
+                  id === "cash"
+                    ? content.dialog.paymentMethodCashLabel
+                    : content.dialog.paymentMethodTransferLabel;
+                return (
+                  <label key={id} className="block cursor-pointer">
+                    <input
+                      type="radio"
+                      name="order-payment-modal"
+                      value={id}
+                      checked={selected}
+                      onChange={() => updateField("paymentMethod", id)}
+                      className="peer sr-only"
+                    />
+                    <span className="border-border bg-card-product peer-checked:border-accent peer-focus-visible:outline-accent flex min-h-12 items-center justify-center rounded-md border px-4 py-2.5 text-center transition-colors peer-focus-visible:outline-3 peer-focus-visible:outline-offset-3">
+                      <span className="text-card-foreground text-sm font-semibold">
+                        {label}
+                      </span>
+                    </span>
+                  </label>
+                );
+              })}
             </div>
-
-            <div>
-              <label htmlFor="order-phone-modal" className="sr-only">
-                {content.phoneField.label}
-              </label>
-              <input
-                id="order-phone-modal"
-                type="tel"
-                inputMode="tel"
-                value={order.phone}
-                onChange={(event) => updateField("phone", event.target.value)}
-                placeholder={
-                  content.phoneField.optionalHint
-                    ? `${content.phoneField.placeholder} · ${content.phoneField.optionalHint}`
-                    : content.phoneField.placeholder
-                }
-                className="border-border bg-card-product focus-visible:outline-accent text-card-foreground placeholder:text-placeholder min-h-11 w-full rounded-md border px-4 py-2.5 text-sm focus-visible:outline-3 focus-visible:outline-offset-2"
-              />
-              {content.phoneField.helper ? (
-                <p className="text-muted-foreground mt-1.5 text-xs leading-5">
-                  {content.phoneField.helper}
-                </p>
-              ) : null}
-            </div>
-          </div>
+          </fieldset>
         </div>
 
         <footer className="border-border mt-auto border-t px-6 py-5">

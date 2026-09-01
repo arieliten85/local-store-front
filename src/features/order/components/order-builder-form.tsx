@@ -5,10 +5,7 @@ import { Button } from "@/components/ui/button";
 import type { OrderContent } from "@/content/content.types";
 import { useOrderSchedule } from "../hooks/use-order-schedule";
 import { formatPrice } from "../lib/format-order-summary";
-import {
-  canAddSize,
-  computeOrderTotals,
-} from "../lib/order-totals";
+import { canAddSize, computeOrderTotals } from "../lib/order-totals";
 import { emptyOrderState } from "../model/order.defaults";
 import type {
   OrderDelivery,
@@ -19,6 +16,7 @@ import { OrderConfirmationDialog } from "./order-confirmation-dialog";
 import { OrderStepDateDialog } from "./order-step-date-dialog";
 import { OrderStepAddressDialog } from "./order-step-address-dialog";
 import { OrderStepCustomerDialog } from "./order-step-customer-dialog";
+import { OrderStepPaymentDialog } from "./order-step-payment-dialog";
 
 type OrderBuilderFormProps = {
   sizes: OrderSize[];
@@ -27,7 +25,8 @@ type OrderBuilderFormProps = {
   content: OrderContent;
 };
 
-type ActiveStep = "date" | "address" | "customer" | "summary" | null;
+type ActiveStep =
+  "date" | "address" | "customer" | "payment" | "summary" | null;
 
 export function OrderBuilderForm({
   sizes,
@@ -35,7 +34,7 @@ export function OrderBuilderForm({
   whatsappNumber,
   content,
 }: OrderBuilderFormProps) {
-  const { dates, slots } = useOrderSchedule();
+  const { dates, slots } = useOrderSchedule(content.availabilityNotes.soldOut);
   const [order, setOrder] = useState<OrderState>(() => {
     const recommended = sizes.find((size) => size.status === "recommended");
     return {
@@ -92,7 +91,7 @@ export function OrderBuilderForm({
       <OrderConfirmationDialog
         open={activeStep === "summary"}
         onOpenChange={(open) => setActiveStep(open ? "summary" : null)}
-        onBack={() => setActiveStep("customer")}
+        onBack={() => setActiveStep("payment")}
         order={order}
         sizes={sizes}
         dates={dates}
@@ -127,8 +126,18 @@ export function OrderBuilderForm({
       <OrderStepCustomerDialog
         open={activeStep === "customer"}
         onOpenChange={(open) => setActiveStep(open ? "customer" : null)}
-        onContinue={() => setActiveStep("summary")}
+        onContinue={() => setActiveStep("payment")}
         onBack={() => setActiveStep("address")}
+        order={order}
+        updateField={updateField}
+        content={content}
+      />
+
+      <OrderStepPaymentDialog
+        open={activeStep === "payment"}
+        onOpenChange={(open) => setActiveStep(open ? "payment" : null)}
+        onContinue={() => setActiveStep("summary")}
+        onBack={() => setActiveStep("customer")}
         order={order}
         updateField={updateField}
         content={content}
@@ -144,8 +153,7 @@ export function OrderBuilderForm({
               order.items.find((item) => item.sizeId === size.id)?.quantity ??
               0;
             const soldOut = size.status === "soldOut";
-            const addDisabled =
-              soldOut || !canAddSize(totals, size);
+            const addDisabled = soldOut || !canAddSize(totals, size);
             return (
               <div
                 key={size.id}
@@ -198,7 +206,7 @@ export function OrderBuilderForm({
                     aria-label={`${content.wizard.addLabel} ${size.label}`}
                     disabled={addDisabled}
                     onClick={() => setSizeQuantity(size.id, quantity + 1)}
-                    className="border-border text-card-foreground hover:border-accent hover:text-accent focus-visible:outline-accent inline-flex size-9 shrink-0 items-center justify-center rounded-full border text-lg leading-none focus-visible:outline-3 focus-visible:outline-offset-3 disabled:cursor-not-allowed disabled:border-border/60 disabled:text-muted-foreground/50"
+                    className="border-border text-card-foreground hover:border-accent hover:text-accent focus-visible:outline-accent disabled:border-border/60 disabled:text-muted-foreground/50 inline-flex size-9 shrink-0 items-center justify-center rounded-full border text-lg leading-none focus-visible:outline-3 focus-visible:outline-offset-3 disabled:cursor-not-allowed"
                   >
                     <svg
                       aria-hidden="true"
@@ -225,10 +233,10 @@ export function OrderBuilderForm({
           className="bg-card-product text-card-foreground mt-3 flex flex-col gap-3 rounded-md px-4 py-4"
         >
           <span className="flex items-end justify-between gap-4">
-            <span className="text-sm text-muted-foreground">
+            <span className="text-muted-foreground text-sm">
               {content.wizard.totalLabel}
             </span>
-            <span className="text-3xl font-bold leading-none tabular-nums tracking-tight">
+            <span className="text-3xl leading-none font-bold tracking-tight tabular-nums">
               {formatPrice(totals.totalPrice)}
             </span>
           </span>
@@ -240,7 +248,7 @@ export function OrderBuilderForm({
               {totals.totalPieces} {content.message.piecesLabel}
             </span>
           </span>
-          <span className="border-t border-border pt-2 text-xs text-muted-foreground">
+          <span className="border-border text-muted-foreground border-t pt-2 text-xs">
             {content.wizard.limitMessage}
           </span>
         </p>

@@ -125,14 +125,13 @@ export function OrderConfirmationDialog({
         <div className="border-border divide-border divide-y overflow-y-auto px-6 py-4">
           {productLines.length > 0 ? (
             <div className="border-border divide-border divide-y border-b py-2">
-              {productLines.map((line, index) => (
+              {productLines.map((line) => (
                 <div
                   key={line.id}
                   className="flex items-baseline justify-between gap-4 py-2.5"
                 >
-
                   <span className="text-card-foreground text-sm font-medium">
-                    {line.quantity} {line.quantity === 1 ? "Tabla" : "Tablas"} - {line.label}
+                    {line.label}
                   </span>
                   <span className="text-muted-foreground text-right text-sm tabular-nums">
                     {line.value}

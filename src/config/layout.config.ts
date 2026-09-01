@@ -1,6 +1,5 @@
 import { deliveryHours } from "@/content/delivery.content";
 import type { LayoutConfig } from "./config.types";
- 
 
 export const layoutConfig = {
   navigation: [
