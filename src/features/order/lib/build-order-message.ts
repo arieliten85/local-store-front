@@ -31,64 +31,70 @@ export function buildOrderMessage({
   }
 
   const totals = computeOrderTotals(order.items, sizes);
-  const lines = [
-    content.message.greeting,
-    "",
-    `*${content.message.orderSection}*`,
-  ];
+  const { message } = content;
 
+  // Saludo condicional: con nombre o genérico
+  const hasName = order.customerName.trim().length > 0;
+  const greeting = hasName
+    ? `${message.defaultGreeting.replace(" 👋", "")}, ${order.customerName} 👋`
+    : message.defaultGreeting;
+
+  const lines: string[] = [greeting, ""];
+
+  // 📋 Pedido
+  lines.push(`${message.orderSectionIcon} *${message.orderSection}*`);
   for (const item of order.items) {
     const size = sizes.find((candidate) => candidate.id === item.sizeId);
     if (!size) continue;
     lines.push(
-      `${content.message.sizeLabel}: ${item.quantity} × ${size.label} · ${formatPrice(
+      `${message.sizeLabel}: ${item.quantity} × ${size.label} · ${formatPrice(
         size.price * item.quantity,
       )}`,
     );
   }
-
   lines.push(
-    `${content.message.totalLabel}: ${totals.totalPieces} ${content.message.piecesLabel} · ${formatPrice(
+    `${message.totalLabel}: ${totals.totalPieces} ${message.piecesLabel} · ${formatPrice(
       totals.totalPrice,
     )}`,
-    `${content.message.dayLabel}: ${date.fullLabel}`,
-    `${content.message.slotLabel}: ${slot.fullLabel}`,
-    "",
-    `*${content.message.deliverySection}*`,
-    `${content.message.addressLabel}: ${order.address}`,
+    `${message.dayLabel}: ${date.fullLabel}`,
+    `${message.slotLabel}: ${slot.fullLabel}`,
   );
 
+  // 📍 Entrega
+  lines.push(
+    "",
+    `${message.deliverySectionIcon} *${message.deliverySection}*`,
+    `${message.addressLabel}: ${order.address}`,
+  );
   if (order.betweenStreets.trim().length > 0) {
-    lines.push(
-      `${content.message.betweenStreetsLabel}: ${order.betweenStreets}`,
-    );
+    lines.push(`${message.betweenStreetsLabel}: ${order.betweenStreets}`);
   }
-
   if (order.floor.trim().length > 0) {
-    lines.push(`${content.message.floorLabel}: ${order.floor}`);
+    lines.push(`${message.floorLabel}: ${order.floor}`);
   }
-
   if (order.reference.trim().length > 0) {
-    lines.push(`${content.message.referenceLabel}: ${order.reference}`);
+    lines.push(`${message.referenceLabel}: ${order.reference}`);
   }
 
-  lines.push("");
-
-  lines.push(`*${content.message.customerSection}*`);
-  lines.push(`${content.message.nameLabel}: ${order.customerName}`);
-
-  if (order.phone.trim().length > 0) {
-    lines.push(`${content.message.phoneLabel}: ${order.phone}`);
-  }
-
+  // 💲 Pago
   const paymentMethodLabel =
     order.paymentMethod === "transfer"
       ? content.dialog.paymentMethodTransferLabel
       : content.dialog.paymentMethodCashLabel;
-  lines.push(`${content.message.paymentLabel}: ${paymentMethodLabel}`);
+  lines.push(
+    "",
+    `${message.paymentSectionIcon} *${message.paymentSection}*`,
+    paymentMethodLabel,
+  );
 
-  lines.push("");
-  lines.push(content.message.closing);
+  // 👤 Datos de contacto
+  lines.push("", `${message.contactSectionIcon} *${message.contactSection}*`);
+  if (order.phone.trim().length > 0) {
+    lines.push(`${message.phoneLabel}: ${order.phone}`);
+  }
+
+  // Cierre
+  lines.push("", message.closing);
 
   return lines.join("\n");
 }
