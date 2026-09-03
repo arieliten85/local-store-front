@@ -126,6 +126,8 @@ export type OrderContent = {
   gallery: {
     label: string;
     viewLabel: string;
+    prevLabel: string;
+    nextLabel: string;
     featured: ImageContent;
     thumbnails: ImageContent[];
   };

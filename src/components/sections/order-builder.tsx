@@ -5,6 +5,7 @@ import { OrderProductGallery } from "@/features/order/components/order-product-g
 import type {
   OrderDelivery,
   OrderSize,
+  ProductComposition,
 } from "@/features/order/model/order.types";
 
 type OrderBuilderProps = {
@@ -12,6 +13,7 @@ type OrderBuilderProps = {
   delivery: OrderDelivery;
   whatsappNumber: string;
   content: OrderContent;
+  composition?: ProductComposition;
 };
 
 export function OrderBuilder({
@@ -19,6 +21,7 @@ export function OrderBuilder({
   delivery,
   whatsappNumber,
   content,
+  composition,
 }: OrderBuilderProps) {
   const { heading, gallery } = content;
   return (
@@ -30,7 +33,7 @@ export function OrderBuilder({
       <Container>
         <h2
           id="order-builder-title"
-          className="font-heading text-accent text-center text-2xl tracking-[0.12em] uppercase"
+          className="font-heading text-accent text-center text-3xl tracking-[0.12em] uppercase"
         >
           {heading.title}
         </h2>
@@ -40,6 +43,8 @@ export function OrderBuilder({
           <OrderProductGallery
             label={gallery.label}
             viewLabel={gallery.viewLabel}
+            prevLabel={gallery.prevLabel}
+            nextLabel={gallery.nextLabel}
             featured={gallery.featured}
             thumbnails={gallery.thumbnails}
           />
@@ -50,6 +55,7 @@ export function OrderBuilder({
               delivery={delivery}
               whatsappNumber={whatsappNumber}
               content={content}
+              composition={composition}
             />
           </div>
         </div>

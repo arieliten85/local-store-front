@@ -22,7 +22,7 @@ export function Hero({
         fill
         priority
         sizes="100vw"
-        className="-z-20 object-cover"
+        className="-z-20 translate-y-[-12%] scale-[1.25] object-cover sm:translate-y-0 sm:scale-100"
       />
       <div className="from-background via-background/80 absolute inset-0 -z-10 bg-gradient-to-r to-transparent" />
       <Container className="py-section-md sm:py-section-lg flex min-h-[calc(100svh-5.6875rem)] items-center">

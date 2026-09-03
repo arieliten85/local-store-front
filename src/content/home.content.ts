@@ -33,11 +33,11 @@ export const homeContent = {
       linkLabel: "Ver en el mapa",
       href: "https://www.google.com/maps/place/Alejandro+Korn,+Provincia+de+Buenos+Aires/@-34.9870952,-58.4222166,12.71z/data=!4m6!3m5!1s0x95bd2cafe5b125e1:0x6f0057ac8cd3c419!8m2!3d-34.984519!4d-58.3760181!16zL20vMGR2eTVn?hl=es&entry=ttu&g_ep=EgoyMDI2MDgyNi4wIKXMDSoASAFQAw%3D%3D",
     },
-    action: { label: "Ver Combos", href: "#flavors" },
+    action: { label: "Nuestros sabores", href: "#flavors" },
   },
 
   quality: {
-    title: "Nuestra Promesa",
+    title: "Nuestro compromiso",
     items: [
       {
         title: "Ingredientes seleccionados",

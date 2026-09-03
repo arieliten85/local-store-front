@@ -56,6 +56,19 @@ export type OrderDelivery = {
   coverageKm: number;
 };
 
+export type ProductFlavorQuantity = {
+  "size-16": number;
+  "size-32": number;
+  "size-48": number;
+};
+
+export type ProductFlavorComposition = {
+  flavor: string;
+  quantities: ProductFlavorQuantity;
+};
+
+export type ProductComposition = ProductFlavorComposition[];
+
 export type OrderPaymentMethod = "cash" | "transfer";
 
 export type OrderState = {

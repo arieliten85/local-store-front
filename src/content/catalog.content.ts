@@ -1,105 +1,73 @@
 import type { ProductContent } from "./content.types";
 
 export const catalogContent = {
-  title: "Los Sabores",
+  title: "Nuestros Sabores",
 
   description: "La selección perfecta para una experiencia completa.",
 
   items: [
     {
-      name: "Salmón",
-      ingredients: "salmón, queso crema",
-      image: {
-        src: "/brand/products/salmon-roll.png",
-        alt: "Rollo de sushi de salmón con queso crema",
-      },
-    },
-    {
-      name: "Langostino",
-      ingredients: "langostino, palta",
-      image: {
-        src: "/brand/products/langostino-roll.png",
-        alt: "Rollo de sushi de langostino con palta",
-      },
-    },
-    {
-      name: "Atún",
-      ingredients: "atún, wasabi",
-      image: {
-        src: "/brand/products/atun-roll.png",
-        alt: "Rollo de sushi de atún con wasabi",
-      },
-    },
-    {
-      name: "Veggie",
-      ingredients: "palta, pepino",
-      image: {
-        src: "/brand/products/veggie-roll.png",
-        alt: "Rollo de sushi veggie con palta y pepino",
-      },
-    },
-    {
-      name: "Salmón Teriyaki",
-      ingredients: "salmón, salsa teriyaki, sésamo",
-      image: {
-        src: "/brand/products/salmon-roll.png",
-        alt: "Rollo de sushi de salmón teriyaki con sésamo",
-      },
-    },
-    {
-      name: "Langostino Crispy",
-      ingredients: "langostino, palta, panko",
-      image: {
-        src: "/brand/products/langostino-roll.png",
-        alt: "Rollo de sushi de langostino crispy con palta",
-      },
-    },
-    {
-      name: "Atún Picante",
-      ingredients: "atún, salsa picante, cebolla de verdeo",
-      image: {
-        src: "/brand/products/atun-roll.png",
-        alt: "Rollo de sushi de atún picante con cebolla de verdeo",
-      },
-    },
-    {
-      name: "Veggie Especial",
-      ingredients: "palta, pepino, zanahoria, sésamo",
-      image: {
-        src: "/brand/products/veggie-roll.png",
-        alt: "Rollo de sushi veggie con palta, pepino y zanahoria",
-      },
-    },
-    {
-      name: "Philadelphia",
+      name: "NewYork Philly",
       ingredients: "salmón, queso crema, palta",
       image: {
-        src: "/brand/products/salmon-roll.png",
-        alt: "Rollo de sushi Philadelphia con salmón y palta",
+        src: "/brand/products/philadelphia-roll.png",
+        alt: "Sabor NewYork Philly",
       },
     },
     {
-      name: "Ebi Roll",
-      ingredients: "langostino, queso crema, ciboulette",
+      name: "Salmón cocido",
+      ingredients: "salmón cocido",
       image: {
-        src: "/brand/products/langostino-roll.png",
-        alt: "Rollo de sushi de langostino con queso crema y ciboulette",
+        src: "/brand/products/salmon-roll.png",
+        alt: "Sabor Salmón cocido",
       },
     },
     {
-      name: "Spicy Tuna",
-      ingredients: "atún, mayonesa picante, sésamo",
+      name: "Tuna",
+      ingredients: "atún",
       image: {
         src: "/brand/products/atun-roll.png",
-        alt: "Rollo de sushi de atún con mayonesa picante",
+        alt: "Sabor Tuna",
       },
     },
     {
-      name: "Green Roll",
-      ingredients: "palta, pepino, queso crema",
+      name: "Pollo y verdeo",
+      ingredients: "pollo, cebolla de verdeo",
+      image: {
+        src: "/brand/products/langostino-roll.png",
+        alt: "Sabor Pollo y verdeo",
+      },
+    },
+    {
+      name: "Zanahoria",
+      ingredients: "zanahoria",
       image: {
         src: "/brand/products/veggie-roll.png",
-        alt: "Rollo de sushi veggie con palta, pepino y queso crema",
+        alt: "Sabor Zanahoria",
+      },
+    },
+    {
+      name: "Pepino",
+      ingredients: "pepino",
+      image: {
+        src: "/brand/products/veggie-roll.png",
+        alt: "Sabor Pepino",
+      },
+    },
+    {
+      name: "Remolacha",
+      ingredients: "remolacha",
+      image: {
+        src: "/brand/products/veggie-roll.png",
+        alt: "Sabor Remolacha",
+      },
+    },
+    {
+      name: "Huevo",
+      ingredients: "huevo",
+      image: {
+        src: "/brand/products/kani-roll.png",
+        alt: "Sabor Huevo",
       },
     },
   ],

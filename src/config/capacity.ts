@@ -7,4 +7,4 @@
  */
 export const soldOutDates: string[] = ["2026-09-05"];
 
-export const DAILY_PIECE_LIMIT = 300;
+export const DAILY_PIECE_LIMIT = 300000;

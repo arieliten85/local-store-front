@@ -19,6 +19,7 @@ import {
   orderSizes,
   orderWhatsAppNumber,
 } from "@/config/order.config";
+import { productCompositions } from "@/config/product-composition.config";
 
 export default function Home() {
   const socials = Object.entries(siteConfig.socials).map(([label, href]) => ({
@@ -43,6 +44,7 @@ export default function Home() {
           delivery={orderDelivery}
           whatsappNumber={orderWhatsAppNumber}
           content={orderContent}
+          composition={productCompositions["simple-sushi"]}
         />
         <Process {...homeContent.process} />
         <Faq {...faqContent} />

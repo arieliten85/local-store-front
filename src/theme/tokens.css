@@ -35,9 +35,9 @@
   --content-narrow: 42rem;
   --content-medium: 56rem;
   --content-wide: 72rem;
-  --section-spacing-sm: 3rem;
-  --section-spacing-md: 5rem;
-  --section-spacing-lg: 7rem;
+  --section-spacing-sm: 2.5rem;
+  --section-spacing-md: 4rem;
+  --section-spacing-lg: 5.5rem;
 }
 
 @theme inline {

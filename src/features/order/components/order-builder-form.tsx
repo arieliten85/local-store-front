@@ -11,7 +11,9 @@ import type {
   OrderDelivery,
   OrderSize,
   OrderState,
+  ProductComposition,
 } from "../model/order.types";
+import { FlavorBreakdownTable } from "./flavor-breakdown-table";
 import { OrderConfirmationDialog } from "./order-confirmation-dialog";
 import { OrderStepDateDialog } from "./order-step-date-dialog";
 import { OrderStepAddressDialog } from "./order-step-address-dialog";
@@ -23,6 +25,7 @@ type OrderBuilderFormProps = {
   delivery: OrderDelivery;
   whatsappNumber: string;
   content: OrderContent;
+  composition?: ProductComposition;
 };
 
 type ActiveStep =
@@ -33,6 +36,7 @@ export function OrderBuilderForm({
   delivery,
   whatsappNumber,
   content,
+  composition,
 }: OrderBuilderFormProps) {
   const { dates, slots } = useOrderSchedule(content.availabilityNotes.soldOut);
   const [order, setOrder] = useState<OrderState>(() => {
@@ -87,7 +91,7 @@ export function OrderBuilderForm({
   };
 
   return (
-    <div className="space-y-5 lg:space-y-4">
+    <div className="space-y-4 lg:space-y-3">
       <OrderConfirmationDialog
         open={activeStep === "summary"}
         onOpenChange={(open) => setActiveStep(open ? "summary" : null)}
@@ -147,7 +151,7 @@ export function OrderBuilderForm({
         <legend className="text-muted-foreground text-xs font-semibold tracking-[0.18em] uppercase">
           {content.steps.size.label}
         </legend>
-        <div className="mt-2.5 grid gap-2">
+        <div className="mt-2 grid gap-1.5">
           {sizes.map((size) => {
             const quantity =
               order.items.find((item) => item.sizeId === size.id)?.quantity ??
@@ -157,13 +161,13 @@ export function OrderBuilderForm({
             return (
               <div
                 key={size.id}
-                className="border-border bg-card-product flex min-h-16 items-center justify-between gap-4 rounded-md border px-4 py-2.5 lg:min-h-14 lg:py-2"
+                className="border-border bg-card-product flex min-h-13 items-center justify-between gap-3 rounded-md border px-3.5 py-2"
               >
-                <div className="flex flex-col gap-1">
-                  <span className="font-heading text-card-foreground flex items-center gap-2 text-lg font-medium">
+                <div className="flex flex-col gap-0.5">
+                  <span className="font-heading text-card-foreground flex items-center gap-2 text-base font-medium">
                     {size.label}
                     {size.status === "recommended" ? (
-                      <span className="bg-accent text-accent-foreground rounded-full px-3 py-1 text-[10px] font-bold uppercase">
+                      <span className="bg-accent text-accent-foreground rounded-full px-2.5 py-0.5 text-[10px] font-bold uppercase">
                         {content.recommendedBadge}
                       </span>
                     ) : null}
@@ -172,7 +176,7 @@ export function OrderBuilderForm({
                     {formatPrice(size.price)}
                   </span>
                 </div>
-                <div className="flex items-center gap-3">
+                <div className="flex items-center gap-2">
                   <button
                     type="button"
                     aria-label={`${content.wizard.removeLabel} ${size.label}`}
@@ -228,29 +232,27 @@ export function OrderBuilderForm({
             );
           })}
         </div>
+        {composition ? (
+          <FlavorBreakdownTable composition={composition} sizes={sizes} />
+        ) : null}
         <p
           aria-live="polite"
-          className="bg-card-product text-card-foreground mt-3 flex flex-col gap-3 rounded-md px-4 py-4"
+          className="text-card-foreground mt-3 flex flex-col gap-1 pt-3"
         >
-          <span className="flex items-end justify-between gap-4">
-            <span className="text-muted-foreground text-sm">
-              {content.wizard.totalLabel}
-            </span>
+          <span className="text-muted-foreground text-[10px] font-semibold uppercase tracking-[0.18em]">
+            {content.wizard.totalLabel}
+          </span>
+          <span className="flex items-baseline gap-3">
             <span className="text-3xl leading-none font-bold tracking-tight tabular-nums">
               {formatPrice(totals.totalPrice)}
             </span>
-          </span>
-          <span className="flex items-center justify-between text-sm">
-            <span className="text-muted-foreground">
-              {content.wizard.totalPiecesLabel}
-            </span>
-            <span className="font-semibold tabular-nums">
+            <span className="text-muted-foreground text-sm">
               {totals.totalPieces} {content.message.piecesLabel}
             </span>
           </span>
-          <span className="border-border text-muted-foreground border-t pt-2 text-xs">
+          {/* <span className="text-muted-foreground text-xs">
             {content.wizard.limitMessage}
-          </span>
+          </span> */}
         </p>
       </fieldset>
 

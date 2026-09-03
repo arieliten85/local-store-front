@@ -8,22 +8,44 @@ export const orderContent = {
   gallery: {
     label: "Product images",
     viewLabel: "View product image",
+    prevLabel: "Imagen anterior",
+    nextLabel: "Imagen siguiente",
     featured: {
       src: "/brand/hero/hero-table.png",
       alt: "Tabla surtida de sushi lista para compartir",
     },
     thumbnails: [
       {
-        src: "/brand/products/langostino-roll.png",
-        alt: "Pieza de langostino de la tabla",
-      },
-      {
-        src: "/brand/products/atun-roll.png",
-        alt: "Pieza de atún de la tabla",
+        src: "/brand/products/philadelphia-roll.png",
+        alt: "Sabor NewYork Philly",
       },
       {
         src: "/brand/products/salmon-roll.png",
-        alt: "Pieza de salmón de la tabla",
+        alt: "Sabor Salmón cocido",
+      },
+      {
+        src: "/brand/products/atun-roll.png",
+        alt: "Sabor Tuna",
+      },
+      {
+        src: "/brand/products/langostino-roll.png",
+        alt: "Sabor Pollo y verdeo",
+      },
+      {
+        src: "/brand/products/veggie-roll.png",
+        alt: "Sabor Zanahoria",
+      },
+      {
+        src: "/brand/products/veggie-roll.png",
+        alt: "Sabor Pepino",
+      },
+      {
+        src: "/brand/products/veggie-roll.png",
+        alt: "Sabor Remolacha",
+      },
+      {
+        src: "/brand/products/kani-roll.png",
+        alt: "Sabor Huevo",
       },
     ],
   },

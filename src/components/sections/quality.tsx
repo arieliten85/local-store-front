@@ -21,7 +21,7 @@ export function Quality({ title, items }: QualityProps) {
             <article
               key={item.title}
               data-carousel-item
-              className="group rounded-card-sm relative aspect-[4/5] w-[78vw] max-w-[22rem] shrink-0 snap-start overflow-hidden sm:w-auto sm:max-w-none"
+              className="group rounded-card-sm shadow-md relative aspect-[4/5] w-[78vw] max-w-[22rem] shrink-0 snap-start overflow-hidden ring-1 ring-white/10 sm:w-auto sm:max-w-none"
             >
               <Image
                 src={item.image.src}
@@ -32,19 +32,20 @@ export function Quality({ title, items }: QualityProps) {
               />
               <div
                 aria-hidden="true"
-                className="absolute inset-0 bg-black/45"
+                className="absolute inset-0 bg-gradient-to-t from-black/85 via-black/40 to-black/10"
               />
               <span
                 aria-hidden="true"
-                className="font-heading text-accent absolute top-5 left-5 text-sm tracking-[0.18em]"
+                className="font-heading text-accent absolute top-5 left-6 text-xs font-semibold tracking-[0.2em]"
               >
                 {String(index + 1).padStart(2, "0")}
               </span>
-              <div className="absolute inset-x-0 bottom-0 p-5">
-                <h3 className="text-lg font-semibold text-white">
+              <div className="absolute inset-x-0 bottom-0 p-6">
+                <div className="mb-4 h-px w-8 bg-accent/70" aria-hidden="true" />
+                <h3 className="text-lg font-semibold leading-tight text-white [text-shadow:0_1px_12px_rgb(0_0_0/0.7)]">
                   {item.title}
                 </h3>
-                <p className="mt-2 text-sm leading-6 text-white/80">
+                <p className="mt-1.5 min-h-[2.375rem] text-xs leading-snug text-white/80 [text-shadow:0_1px_8px_rgb(0_0_0/0.8)]">
                   {item.description}
                 </p>
               </div>

@@ -3,11 +3,14 @@
 import Image from "next/image";
 import { useState } from "react";
 import type { ImageContent } from "@/content/content.types";
+import { Carousel } from "@/components/ui/carousel";
 import { cn } from "@/lib/class-names";
 
 type OrderProductGalleryProps = {
   label: string;
   viewLabel: string;
+  prevLabel: string;
+  nextLabel: string;
   featured: ImageContent;
   thumbnails: ImageContent[];
 };
@@ -15,11 +18,14 @@ type OrderProductGalleryProps = {
 export function OrderProductGallery({
   label,
   viewLabel,
+  prevLabel,
+  nextLabel,
   featured,
   thumbnails,
 }: OrderProductGalleryProps) {
   const images = [featured, ...thumbnails];
-  const [selectedImage, setSelectedImage] = useState(featured);
+  const [selectedIndex, setSelectedIndex] = useState(0);
+  const selectedImage = images[selectedIndex];
 
   return (
     <div>
@@ -34,22 +40,25 @@ export function OrderProductGallery({
         />
       </div>
 
-      <div
-        className="mt-2.5 grid grid-cols-4 gap-2 sm:mt-3 lg:gap-3"
-        aria-label={label}
+      <Carousel
+        prevLabel={prevLabel}
+        nextLabel={nextLabel}
+        viewportClassName="mt-2.5 sm:mt-3"
+        controlsClassName="mt-4"
       >
-        {images.map((image) => {
-          const selected = image.src === selectedImage.src;
+        {images.map((image, index) => {
+          const selected = index === selectedIndex;
 
           return (
             <button
-              key={image.src}
+              key={`${image.src}-${index}`}
               type="button"
+              data-carousel-item
               aria-label={`${viewLabel}: ${image.alt}`}
               aria-pressed={selected}
-              onClick={() => setSelectedImage(image)}
+              onClick={() => setSelectedIndex(index)}
               className={cn(
-                "focus-visible:outline-accent relative aspect-square overflow-hidden rounded-md border-2 transition-colors focus-visible:outline-3 focus-visible:outline-offset-2 sm:aspect-[1.45/1]",
+                "focus-visible:outline-accent relative aspect-square w-[24%] shrink-0 snap-start overflow-hidden rounded-md border-2 transition-colors focus-visible:outline-3 focus-visible:outline-offset-2 sm:w-[18%] lg:w-[20%]",
                 selected
                   ? "border-accent"
                   : "hover:border-border border-transparent",
@@ -59,13 +68,13 @@ export function OrderProductGallery({
                 src={image.src}
                 alt=""
                 fill
-                sizes="(max-width: 640px) 25vw, (max-width: 1024px) 22vw, 12vw"
+                sizes="(max-width: 640px) 25vw, (max-width: 1024px) 18vw, 20vw"
                 className="object-cover"
               />
             </button>
           );
         })}
-      </div>
+      </Carousel>
     </div>
   );
 }
