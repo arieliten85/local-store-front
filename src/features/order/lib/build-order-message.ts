@@ -35,11 +35,10 @@ export function buildOrderMessage({
   const totals = computeOrderTotals(order.items, sizes);
   const { message } = content;
 
-  // Saludo condicional: con nombre o genérico
-  const hasName = order.customerName.trim().length > 0;
-  const greeting = hasName
-    ? `${message.defaultGreeting.replace(" 👋", "")}, ${order.customerName} 👋`
-    : message.defaultGreeting;
+  const greeting =
+    order.customerName.trim().length > 0
+      ? `Hola, soy ${order.customerName}. ¿Podrían confirmarme la reserva?`
+      : "Hola. ¿Podrían confirmarme la reserva?";
 
   const lines: string[] = [greeting, ""];
 
@@ -109,15 +108,6 @@ export function buildOrderMessage({
     `${message.paymentSectionIcon} *${message.paymentSection}*`,
     paymentMethodLabel,
   );
-
-  // 👤 Datos de contacto
-  lines.push("", `${message.contactSectionIcon} *${message.contactSection}*`);
-  if (order.phone.trim().length > 0) {
-    lines.push(`${message.phoneLabel}: ${order.phone}`);
-  }
-
-  // Cierre
-  lines.push("", message.closing);
 
   return lines.join("\n");
 }

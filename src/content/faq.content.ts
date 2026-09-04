@@ -16,7 +16,7 @@ export const faqContent = {
     {
       question: "¿El envío tiene costo?",
       answer:
-        "El envío es gratuito dentro de Alejandro Korn, en un radio de hasta 3 km.",
+        "El envío es gratuito dentro de Alejandro Korn, en un radio de hasta 3 km. Para entregas fuera de esta zona, el costo de envío se calcula según la distancia y te lo confirmaremos al momento de realizar tu consulta.",
     },
   ],
 } satisfies FaqContent;
