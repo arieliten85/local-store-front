@@ -1,4 +1,9 @@
+"use client";
+
+import { useEffect, useState } from "react";
 import Image from "next/image";
+import { FaWhatsapp } from "react-icons/fa";
+import { FiCopy, FiCheck } from "react-icons/fi";
 import { Container } from "@/components/ui/container";
 import type { FooterContent } from "@/content/content.types";
 
@@ -9,7 +14,20 @@ type FooterProps = {
   navigation: Array<{ label: string; href: string }>;
   socials: Array<{ label: string; href: string }>;
   whatsappHref: string;
+  whatsappNumber: string;
 };
+
+function formatWhatsAppNumber(number: string) {
+  const digits = number.replace(/\D/g, "");
+  if (digits.length < 10) return number;
+
+  if (digits.startsWith("54")) {
+    const local = digits.slice(2);
+    return `+54 9 ${local.slice(0, 2)} ${local.slice(2, 6)}-${local.slice(6)}`;
+  }
+
+  return number;
+}
 
 export function Footer({
   name,
@@ -18,7 +36,41 @@ export function Footer({
   navigation,
   socials,
   whatsappHref,
+  whatsappNumber,
 }: FooterProps) {
+  const [copied, setCopied] = useState(false);
+  const [isMobile, setIsMobile] = useState(false);
+  const formattedNumber = formatWhatsAppNumber(whatsappNumber);
+
+  useEffect(() => {
+    if (typeof window === "undefined") return;
+
+    const media = window.matchMedia("(pointer: coarse)");
+
+    const update = () =>
+      setIsMobile(media.matches || navigator.maxTouchPoints > 0);
+    update();
+
+    media.addEventListener("change", update);
+
+    return () => media.removeEventListener("change", update);
+  }, []);
+
+  const handleContactClick = async () => {
+    if (isMobile) {
+      window.open(whatsappHref, "_blank", "noopener,noreferrer");
+      return;
+    }
+
+    try {
+      await navigator.clipboard.writeText(formattedNumber);
+      setCopied(true);
+      window.setTimeout(() => setCopied(false), 1500);
+    } catch {
+      window.prompt("Copiar número de WhatsApp", formattedNumber);
+    }
+  };
+
   return (
     <footer className="border-border bg-background border-t py-12">
       <Container>
@@ -60,14 +112,24 @@ export function Footer({
             </div>
             <div>
               <FooterTitle>{content.contact.title}</FooterTitle>
-              <a
-                href={whatsappHref}
-                target="_blank"
-                rel="noopener noreferrer"
-                className="text-muted-foreground hover:text-accent focus-visible:outline-accent mt-3 inline-flex rounded-sm text-sm transition-colors focus-visible:outline-3 focus-visible:outline-offset-3"
+              <button
+                type="button"
+                onClick={handleContactClick}
+                aria-label="Contactar por WhatsApp"
+                className="text-muted-foreground hover:text-accent focus-visible:outline-accent mt-3 inline-flex items-center gap-2 rounded-sm text-sm transition-colors focus-visible:outline-3 focus-visible:outline-offset-3"
               >
-                {content.contact.whatsappLabel}
-              </a>
+                <FaWhatsapp className="h-4 w-4" aria-hidden="true" />
+                <span className="font-medium">{formattedNumber}</span>
+                {!isMobile &&
+                  (copied ? (
+                    <FiCheck
+                      className="h-4 w-4 text-emerald-500"
+                      aria-hidden="true"
+                    />
+                  ) : (
+                    <FiCopy className="h-4 w-4" aria-hidden="true" />
+                  ))}
+              </button>
             </div>
           </div>
 

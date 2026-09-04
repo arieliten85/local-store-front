@@ -33,4 +33,4 @@ export const orderDelivery = {
   coverageKm: 3,
 } satisfies OrderDelivery;
 
-export const orderWhatsAppNumber = "5491157171688";
+export const orderWhatsAppNumber = "5491160997133";

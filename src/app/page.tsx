@@ -70,6 +70,7 @@ export default function Home() {
         navigation={layoutConfig.navigation}
         socials={socials}
         whatsappHref={`https://wa.me/${orderWhatsAppNumber}`}
+        whatsappNumber={orderWhatsAppNumber}
       />
     </>
   );
