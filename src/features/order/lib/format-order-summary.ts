@@ -23,6 +23,8 @@ export type OrderSummaryRow = {
 export type OrderSummaryLine = {
   id: string;
   label: string;
+  /** Optional short meta rendered in smaller italic next to the main label */
+  meta?: string;
   value: string;
 };
 
@@ -54,6 +56,18 @@ export function formatOrderSummary({
   const totals = computeOrderTotals(order.items, sizes);
 
   for (const item of order.items) {
+    if (item.customFlavors) {
+      const customTotals = computeOrderTotals([item], sizes);
+      const flavorCount = item.customFlavors.length;
+      const flavorUnit = flavorCount === 1 ? "sabor" : "sabores";
+      productLines.push({
+        id: `size-${item.sizeId}-custom`,
+        label: `${item.quantity} Tabla especial de ${customTotals.totalPieces} ${content.message.piecesLabel}`,
+        meta: `${flavorCount} ${flavorUnit}`,
+        value: formatPrice(customTotals.totalPrice),
+      });
+      continue;
+    }
     const size = sizes.find((candidate) => candidate.id === item.sizeId);
     if (!size) continue;
     const lineTotal = size.price * item.quantity;

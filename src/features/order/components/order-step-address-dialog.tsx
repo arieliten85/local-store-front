@@ -42,7 +42,8 @@ export function OrderStepAddressDialog({
   }, [open]);
 
   const titleId = "order-step-address-title";
-  const canContinue = order.address.trim().length > 0;
+  const canContinue =
+    order.address.trim().length > 0 && order.betweenStreets.trim().length > 0;
 
   return (
     <dialog

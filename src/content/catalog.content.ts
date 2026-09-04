@@ -7,6 +7,7 @@ export const catalogContent = {
 
   items: [
     {
+      id: "newyork-philly",
       name: "NewYork Philly",
       ingredients: "salmón, queso crema, palta",
       image: {
@@ -15,6 +16,7 @@ export const catalogContent = {
       },
     },
     {
+      id: "salmon-cocido",
       name: "Salmón cocido",
       ingredients: "salmón cocido",
       image: {
@@ -23,6 +25,7 @@ export const catalogContent = {
       },
     },
     {
+      id: "tuna",
       name: "Tuna",
       ingredients: "atún",
       image: {
@@ -31,6 +34,7 @@ export const catalogContent = {
       },
     },
     {
+      id: "pollo-y-verdeo",
       name: "Pollo y verdeo",
       ingredients: "pollo, cebolla de verdeo",
       image: {
@@ -39,6 +43,7 @@ export const catalogContent = {
       },
     },
     {
+      id: "zanahoria",
       name: "Zanahoria",
       ingredients: "zanahoria",
       image: {
@@ -47,6 +52,7 @@ export const catalogContent = {
       },
     },
     {
+      id: "pepino",
       name: "Pepino",
       ingredients: "pepino",
       image: {
@@ -55,6 +61,7 @@ export const catalogContent = {
       },
     },
     {
+      id: "remolacha",
       name: "Remolacha",
       ingredients: "remolacha",
       image: {
@@ -63,6 +70,7 @@ export const catalogContent = {
       },
     },
     {
+      id: "huevo",
       name: "Huevo",
       ingredients: "huevo",
       image: {

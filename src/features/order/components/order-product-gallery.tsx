@@ -28,7 +28,7 @@ export function OrderProductGallery({
   const selectedImage = images[selectedIndex];
 
   return (
-    <div>
+    <div aria-label={label}>
       <div className="relative aspect-[458/430] overflow-hidden rounded-md lg:aspect-[1.3/1]">
         <Image
           key={selectedImage.src}

@@ -5,6 +5,7 @@ import { siteConfig } from "@/config/site.config";
 import { createRestaurantJsonLd } from "@/lib/seo/json-ld";
 import { bodyFont, headingFont } from "@/theme/fonts";
 import "./globals.css";
+import { WhatsAppFab } from "@/components/ui/whatsapp-fab";
 
 export const metadata: Metadata = defaultMetadata;
 
@@ -24,6 +25,7 @@ export default function RootLayout({
           dangerouslySetInnerHTML={{ __html: JSON.stringify(restaurantJsonLd) }}
         />
         {children}
+        <WhatsAppFab />
       </body>
     </html>
   );

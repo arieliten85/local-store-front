@@ -21,7 +21,7 @@ export function Quality({ title, items }: QualityProps) {
             <article
               key={item.title}
               data-carousel-item
-              className="group rounded-card-sm shadow-md relative aspect-[4/5] w-[78vw] max-w-[22rem] shrink-0 snap-start overflow-hidden ring-1 ring-white/10 sm:w-auto sm:max-w-none"
+              className="group rounded-card-sm relative aspect-[4/5] w-[78vw] max-w-[22rem] shrink-0 snap-start overflow-hidden shadow-md ring-1 ring-white/10 sm:w-auto sm:max-w-none"
             >
               <Image
                 src={item.image.src}
@@ -41,8 +41,11 @@ export function Quality({ title, items }: QualityProps) {
                 {String(index + 1).padStart(2, "0")}
               </span>
               <div className="absolute inset-x-0 bottom-0 p-6">
-                <div className="mb-4 h-px w-8 bg-accent/70" aria-hidden="true" />
-                <h3 className="text-lg font-semibold leading-tight text-white [text-shadow:0_1px_12px_rgb(0_0_0/0.7)]">
+                <div
+                  className="bg-accent/70 mb-4 h-px w-8"
+                  aria-hidden="true"
+                />
+                <h3 className="text-lg leading-tight font-semibold text-white [text-shadow:0_1px_12px_rgb(0_0_0/0.7)]">
                   {item.title}
                 </h3>
                 <p className="mt-1.5 min-h-[2.375rem] text-xs leading-snug text-white/80 [text-shadow:0_1px_8px_rgb(0_0_0/0.8)]">

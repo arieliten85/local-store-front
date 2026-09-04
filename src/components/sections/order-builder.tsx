@@ -1,6 +1,9 @@
 import { Container } from "@/components/ui/container";
 import type { OrderContent } from "@/content/content.types";
-import { OrderBuilderForm } from "@/features/order/components/order-builder-form";
+import {
+  OrderBuilderForm,
+  OrderBuilderFormHandle,
+} from "@/features/order/components/order-builder-form";
 import { OrderProductGallery } from "@/features/order/components/order-product-gallery";
 import type {
   OrderDelivery,
@@ -14,6 +17,7 @@ type OrderBuilderProps = {
   whatsappNumber: string;
   content: OrderContent;
   composition?: ProductComposition;
+  formRef?: React.RefObject<OrderBuilderFormHandle | null>;
 };
 
 export function OrderBuilder({
@@ -22,6 +26,7 @@ export function OrderBuilder({
   whatsappNumber,
   content,
   composition,
+  formRef,
 }: OrderBuilderProps) {
   const { heading, gallery } = content;
   return (
@@ -51,6 +56,7 @@ export function OrderBuilder({
 
           <div className="rounded-card-sm bg-card p-4 shadow-md sm:p-5">
             <OrderBuilderForm
+              ref={formRef}
               sizes={sizes}
               delivery={delivery}
               whatsappNumber={whatsappNumber}

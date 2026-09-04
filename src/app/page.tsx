@@ -1,8 +1,12 @@
+"use client";
+
+import { useRef } from "react";
 import { Header } from "@/components/sections/header";
 import { Hero } from "@/components/sections/hero";
 import { Quality } from "@/components/sections/quality";
 import { Flavors } from "@/components/sections/flavors";
-import { OrderBuilder } from "@/components/sections/order-builder";
+import { OrderBuilderClient } from "@/components/sections/order-builder.client";
+import { CustomOrderSection } from "@/features/order/components/custom-order-section";
 import { Process } from "@/components/sections/process";
 import { Faq } from "@/components/sections/faq";
 import { FinalCta } from "@/components/sections/final-cta";
@@ -20,12 +24,15 @@ import {
   orderWhatsAppNumber,
 } from "@/config/order.config";
 import { productCompositions } from "@/config/product-composition.config";
+import type { OrderBuilderFormHandle } from "@/features/order/components/order-builder-form";
 
 export default function Home() {
   const socials = Object.entries(siteConfig.socials).map(([label, href]) => ({
     label,
     href,
   }));
+  const formRef = useRef<OrderBuilderFormHandle | null>(null);
+
   return (
     <>
       <Header
@@ -39,12 +46,18 @@ export default function Home() {
         <Hero {...homeContent.hero} />
         <Quality {...homeContent.quality} />
         <Flavors {...catalogContent} />
-        <OrderBuilder
+        <OrderBuilderClient
+          formRef={formRef}
           sizes={orderSizes}
           delivery={orderDelivery}
           whatsappNumber={orderWhatsAppNumber}
           content={orderContent}
           composition={productCompositions["simple-sushi"]}
+        />
+        <CustomOrderSection
+          formRef={formRef}
+          sizes={orderSizes}
+          content={orderContent}
         />
         <Process {...homeContent.process} />
         <Faq {...faqContent} />

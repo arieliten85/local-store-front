@@ -1,6 +1,6 @@
 "use client";
 
-import { useState } from "react";
+import { useState, forwardRef, useImperativeHandle } from "react";
 import { Button } from "@/components/ui/button";
 import type { OrderContent } from "@/content/content.types";
 import { useOrderSchedule } from "../hooks/use-order-schedule";
@@ -12,7 +12,12 @@ import type {
   OrderSize,
   OrderState,
   ProductComposition,
+  OrderLineItem,
 } from "../model/order.types";
+
+export type OrderBuilderFormHandle = {
+  addCustomOrderItem: (item: OrderLineItem) => void;
+};
 import { FlavorBreakdownTable } from "./flavor-breakdown-table";
 import { OrderConfirmationDialog } from "./order-confirmation-dialog";
 import { OrderStepDateDialog } from "./order-step-date-dialog";
@@ -31,19 +36,18 @@ type OrderBuilderFormProps = {
 type ActiveStep =
   "date" | "address" | "customer" | "payment" | "summary" | null;
 
-export function OrderBuilderForm({
-  sizes,
-  delivery,
-  whatsappNumber,
-  content,
-  composition,
-}: OrderBuilderFormProps) {
+export const OrderBuilderForm = forwardRef<
+  OrderBuilderFormHandle,
+  OrderBuilderFormProps
+>(function OrderBuilderForm(
+  { sizes, delivery, whatsappNumber, content, composition },
+  ref,
+) {
   const { dates, slots } = useOrderSchedule(content.availabilityNotes.soldOut);
   const [order, setOrder] = useState<OrderState>(() => {
-    const recommended = sizes.find((size) => size.status === "recommended");
     return {
       ...emptyOrderState,
-      items: recommended ? [{ sizeId: recommended.id, quantity: 1 }] : [],
+      items: [],
       deliveryDate: null,
       deliverySlot: null,
     };
@@ -90,11 +94,23 @@ export function OrderBuilderForm({
     setActiveStep("date");
   };
 
+  useImperativeHandle(ref, () => ({
+    addCustomOrderItem(item: OrderLineItem) {
+      setOrder((current) => ({ ...current, items: [...current.items, item] }));
+      openDateStep();
+    },
+  }));
+
   return (
     <div className="space-y-4 lg:space-y-3">
       <OrderConfirmationDialog
         open={activeStep === "summary"}
         onOpenChange={(open) => setActiveStep(open ? "summary" : null)}
+        onCloseReset={() =>
+          setOrder(() => ({
+            ...emptyOrderState,
+          }))
+        }
         onBack={() => setActiveStep("payment")}
         order={order}
         sizes={sizes}
@@ -239,7 +255,7 @@ export function OrderBuilderForm({
           aria-live="polite"
           className="text-card-foreground mt-3 flex flex-col gap-1 pt-3"
         >
-          <span className="text-muted-foreground text-[10px] font-semibold uppercase tracking-[0.18em]">
+          <span className="text-muted-foreground text-[10px] font-semibold tracking-[0.18em] uppercase">
             {content.wizard.totalLabel}
           </span>
           <span className="flex items-baseline gap-3">
@@ -267,4 +283,4 @@ export function OrderBuilderForm({
       </div>
     </div>
   );
-}
+});

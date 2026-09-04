@@ -20,6 +20,7 @@ type OrderConfirmationDialogProps = {
   open: boolean;
   onOpenChange: (open: boolean) => void;
   onBack?: () => void;
+  onCloseReset?: () => void;
   order: OrderState;
   sizes: OrderSize[];
   dates: DeliveryDate[];
@@ -33,6 +34,7 @@ export function OrderConfirmationDialog({
   open,
   onOpenChange,
   onBack,
+  onCloseReset,
   order,
   sizes,
   dates,
@@ -85,6 +87,7 @@ export function OrderConfirmationDialog({
           suppressCloseRef.current = false;
           return;
         }
+        if (typeof onCloseReset === "function") onCloseReset();
         onOpenChange(false);
       }}
       className="bg-card text-card-foreground rounded-card-sm sm:border-border fixed top-1/2 left-1/2 m-0 max-h-[88dvh] w-[calc(100%-2rem)] max-w-md -translate-x-1/2 -translate-y-1/2 overflow-hidden shadow-lg sm:top-0 sm:right-0 sm:bottom-0 sm:left-auto sm:m-0 sm:h-full sm:max-h-none sm:w-[26rem] sm:max-w-none sm:translate-x-0 sm:translate-y-0 sm:rounded-none sm:border-l"
@@ -102,7 +105,10 @@ export function OrderConfirmationDialog({
           <button
             type="button"
             aria-label={dialog.closeLabel}
-            onClick={() => onOpenChange(false)}
+            onClick={() => {
+              if (typeof onCloseReset === "function") onCloseReset();
+              onOpenChange(false);
+            }}
             className="border-border text-muted-foreground hover:text-foreground focus-visible:outline-accent inline-flex h-10 w-10 shrink-0 items-center justify-center rounded-full border focus-visible:outline-3 focus-visible:outline-offset-3"
           >
             <svg
@@ -131,7 +137,12 @@ export function OrderConfirmationDialog({
                   className="flex items-baseline justify-between gap-4 py-2.5"
                 >
                   <span className="text-card-foreground text-sm font-medium">
-                    {line.label}
+                    <span>{line.label}</span>
+                    {line.meta ? (
+                      <span className="text-muted-foreground ml-2 text-xs italic">
+                        ({line.meta})
+                      </span>
+                    ) : null}
                   </span>
                   <span className="text-muted-foreground text-right text-sm tabular-nums">
                     {line.value}

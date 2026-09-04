@@ -61,6 +61,7 @@ export type HomeContent = {
 };
 
 export type ProductItem = {
+  id: string;
   name: string;
   ingredients: string;
   image: ImageContent;
@@ -121,6 +122,20 @@ export type OrderOptionFieldContent = {
 export type OrderContent = {
   heading: {
     title: string;
+  };
+  customOrder: {
+    eyebrow: string;
+    title: string;
+    highlight: string;
+    description: string;
+    cta: string;
+    helper: string;
+    badge: string;
+    steps: Array<{
+      number: string;
+      title: string;
+      description: string;
+    }>;
   };
   reserveHeading: string;
   gallery: {

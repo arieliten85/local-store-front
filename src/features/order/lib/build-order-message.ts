@@ -5,6 +5,8 @@ import type {
   OrderState,
 } from "../model/order.types";
 import type { OrderContent } from "@/content/content.types";
+import { catalogContent } from "@/content/catalog.content";
+import { flavorSalePrices } from "@/config/pricing";
 import { formatPrice } from "./format-order-summary";
 import { computeOrderTotals } from "./order-totals";
 
@@ -44,6 +46,27 @@ export function buildOrderMessage({
   // 📋 Pedido
   lines.push(`${message.orderSectionIcon} *${message.orderSection}*`);
   for (const item of order.items) {
+    if (item.customFlavors) {
+      const customTotals = computeOrderTotals([item], sizes);
+      lines.push(
+        `🍱 *Tabla personalizada (${customTotals.totalPieces} ${message.piecesLabel})*:`,
+      );
+      for (const flavorLine of item.customFlavors) {
+        const productItem = catalogContent.items.find(
+          (p) => p.id === flavorLine.flavorId,
+        );
+        const flavorName = productItem ? productItem.name : flavorLine.flavorId;
+        const unitPrice = flavorSalePrices[flavorLine.flavorId] ?? 0;
+        lines.push(
+          `  - ${flavorLine.quantity} × ${flavorName} · ${formatPrice(
+            unitPrice * flavorLine.quantity,
+          )}`,
+        );
+      }
+      lines.push(`  Subtotal: ${formatPrice(customTotals.totalPrice)}`);
+      continue;
+    }
+
     const size = sizes.find((candidate) => candidate.id === item.sizeId);
     if (!size) continue;
     lines.push(

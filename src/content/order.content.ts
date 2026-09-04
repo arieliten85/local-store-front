@@ -4,6 +4,33 @@ export const orderContent = {
   heading: {
     title: "Tabla Simple Sushi",
   },
+  customOrder: {
+    eyebrow: "Experiencia a tu medida",
+    title: "Creá una tabla",
+    highlight: "única para vos",
+    description:
+      "Elegí tus piezas favoritas, combiná sabores y armá una experiencia gastronómica hecha exactamente a tu gusto.",
+    cta: "Personalizá tu tabla",
+    helper: "Rápido, simple y 100% personalizado",
+    badge: "Sushi hecho a tu medida",
+    steps: [
+      {
+        number: "01",
+        title: "Elegí tus piezas",
+        description: "Seleccioná tus favoritos",
+      },
+      {
+        number: "02",
+        title: "Combiná sabores",
+        description: "Armá la mezcla ideal",
+      },
+      {
+        number: "03",
+        title: "Disfrutá",
+        description: "Nosotros hacemos el resto",
+      },
+    ],
+  },
   reserveHeading: "Reservá tu tabla para el fin de semana",
   gallery: {
     label: "Product images",

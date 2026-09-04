@@ -1,4 +1,5 @@
 import { DAILY_PIECE_LIMIT } from "@/config/capacity";
+import { flavorSalePrices } from "@/config/pricing";
 import type { OrderLineItem, OrderSize } from "../model/order.types";
 
 export type OrderTotals = {
@@ -8,8 +9,12 @@ export type OrderTotals = {
 
 /**
  * Central calculation of an order's piece and price totals across every
- * selected size line. Kept pure so the form, the summary and the WhatsApp
+ * selected line. Kept pure so the form, the summary and the WhatsApp
  * message all agree on the same numbers.
+ *
+ * A personalized line (one that carries `customFlavors`) derives its pieces
+ * and price by summing its flavor lines against `flavorSalePrices`. Fixed
+ * lines keep using `size.pieceCount` / `size.price`.
  */
 export function computeOrderTotals(
   items: OrderLineItem[],
@@ -19,6 +24,25 @@ export function computeOrderTotals(
   let totalPrice = 0;
 
   for (const item of items) {
+    if (item.customFlavors && item.customFlavors.length > 0) {
+      let itemPieces = 0;
+      let itemPrice = 0;
+      for (const flavor of item.customFlavors) {
+        const pieces = flavor.quantity || 0;
+        const unitPriceRaw = flavorSalePrices[flavor.flavorId];
+        if (unitPriceRaw === undefined) {
+          console.warn(
+            `[order-totals] missing price for flavorId="${flavor.flavorId}"`,
+          );
+        }
+        const unitPrice = unitPriceRaw ?? 0;
+        itemPieces += pieces;
+        itemPrice += unitPrice * pieces;
+      }
+      totalPieces += itemPieces * (item.quantity || 1);
+      totalPrice += itemPrice * (item.quantity || 1);
+      continue;
+    }
     const size = sizes.find((candidate) => candidate.id === item.sizeId);
     if (!size) continue;
     totalPieces += size.pieceCount * item.quantity;

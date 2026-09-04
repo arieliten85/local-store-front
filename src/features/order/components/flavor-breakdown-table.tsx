@@ -29,13 +29,13 @@ export function FlavorBreakdownTable({
       <table className="mt-1.5 w-full text-sm" role="table">
         <thead>
           <tr className="text-muted-foreground border-border/40 border-b text-left text-[10px] font-semibold tracking-wide uppercase">
-            <th className="pb-1.5 pr-3" scope="col">
+            <th className="pr-3 pb-1.5" scope="col">
               8 Sabores
             </th>
             {sizes.map((size) => (
               <th
                 key={size.id}
-                className="pb-1.5 px-1.5 text-center tabular-nums"
+                className="px-1.5 pb-1.5 text-center tabular-nums"
                 scope="col"
               >
                 {size.pieceCount} un.
@@ -56,7 +56,7 @@ export function FlavorBreakdownTable({
                     {name}
                   </span>
                   {description ? (
-                    <span className="text-[11px] italic text-muted-foreground">
+                    <span className="text-muted-foreground text-[11px] italic">
                       {` (${description})`}
                     </span>
                   ) : null}
@@ -64,7 +64,7 @@ export function FlavorBreakdownTable({
                 {sizes.map((size) => (
                   <td
                     key={size.id}
-                    className="text-accent py-1 px-1.5 text-center font-medium tabular-nums"
+                    className="text-accent px-1.5 py-1 text-center font-medium tabular-nums"
                   >
                     {item.quantities[size.id as keyof typeof item.quantities] ??
                       "–"}

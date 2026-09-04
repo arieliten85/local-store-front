@@ -29,9 +29,17 @@ export type OrderSize = {
   note?: string;
 };
 
+export type CustomFlavorLine = {
+  flavorId: string;
+  quantity: number;
+};
+
 export type OrderLineItem = {
   sizeId: OrderSize["id"];
   quantity: number;
+  /** Present only on personalized items. When set, price/pieces are derived
+   *  from `customFlavors` against `flavorSalePrices`, not from the size. */
+  customFlavors?: CustomFlavorLine[];
 };
 
 export type DeliveryDate = {
