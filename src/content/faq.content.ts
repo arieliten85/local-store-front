@@ -6,7 +6,7 @@ export const faqContent = {
     {
       question: "¿Qué días hacen entregas?",
       answer:
-        "Realizamos entregas los viernes y sábados, entre las 18:00 y las 21:00.",
+        "Realizamos entregas los viernes y sábados, entre las 20:00 y las 23:00.",
     },
     {
       question: "¿Cuándo debo hacer mi reserva?",

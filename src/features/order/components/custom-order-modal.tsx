@@ -1,6 +1,6 @@
 "use client";
 
-import { useEffect, useRef, useState } from "react";
+import { Fragment, useEffect, useRef, useState } from "react";
 import type {
   OrderSize,
   OrderLineItem,
@@ -120,15 +120,24 @@ export function CustomOrderModal({
     <dialog
       ref={dialogRef}
       onClose={() => onOpenChange(false)}
+      aria-labelledby="custom-order-modal-title"
       className="bg-card text-card-foreground rounded-card-sm fixed top-1/2 left-1/2 m-0 max-h-[88dvh] w-[calc(100%-2rem)] max-w-md -translate-x-1/2 -translate-y-1/2 overflow-hidden shadow-lg sm:top-0 sm:right-0 sm:bottom-0 sm:left-auto sm:m-0 sm:h-full sm:max-h-none sm:w-[26rem] sm:max-w-none sm:translate-x-0 sm:translate-y-0 sm:rounded-none sm:border-l"
     >
       <div className="flex max-h-[88dvh] flex-col sm:h-full sm:max-h-none">
         <header className="border-border flex items-start justify-between gap-4 border-b px-6 py-5">
           <div>
-            <h2 className="font-heading text-xl font-semibold">
-              Personalizá tu tabla
+            <h2
+              id="custom-order-modal-title"
+              className="font-heading text-xl font-semibold"
+            >
+              {content.customOrderModal.titleLabel}
             </h2>
-            <p className="text-muted-foreground text-sm">Paso {step} de 3</p>
+            <p className="text-muted-foreground text-sm">
+              {content.customOrderModal.stepLabel.replace(
+                "{step}",
+                String(step),
+              )}
+            </p>
           </div>
           <button
             type="button"
@@ -157,7 +166,7 @@ export function CustomOrderModal({
           {step === 1 && (
             <fieldset>
               <legend className="text-muted-foreground text-xs font-semibold tracking-[0.18em] uppercase">
-                Piezas
+                {content.customOrderModal.piecesLabel}
               </legend>
               <div className="mt-3 grid grid-cols-3 gap-2">
                 {[16, 32, 48].map((p) => (
@@ -175,7 +184,10 @@ export function CustomOrderModal({
                     />
                     <span className="border-border bg-card-product peer-checked:border-accent grid min-h-14 gap-0.5 rounded-md border px-3 py-3 text-center transition-colors">
                       <span className="text-card-foreground text-sm font-semibold">
-                        {p} piezas
+                        {content.customOrderModal.pieceOptionLabel.replace(
+                          "{p}",
+                          String(p),
+                        )}
                       </span>
                     </span>
                   </label>
@@ -187,7 +199,10 @@ export function CustomOrderModal({
           {step === 2 && (
             <fieldset>
               <legend className="text-muted-foreground text-xs font-semibold tracking-[0.18em] uppercase">
-                Elegí hasta {maxFlavors} sabores
+                {content.customOrderModal.flavorLimitLabel.replace(
+                  "{maxFlavors}",
+                  String(maxFlavors),
+                )}
               </legend>
               <div className="mt-3 grid grid-cols-2 gap-2">
                 {flavors.map((f) => {
@@ -215,7 +230,9 @@ export function CustomOrderModal({
                 })}
               </div>
               <p className="text-muted-foreground mt-3 text-xs">
-                Seleccionados: {selectedFlavorIds.length}/{maxFlavors}
+                {content.customOrderModal.selectedCountLabel
+                  .replace("{selected}", String(selectedFlavorIds.length))
+                  .replace("{max}", String(maxFlavors))}
               </p>
             </fieldset>
           )}
@@ -223,16 +240,25 @@ export function CustomOrderModal({
           {step === 3 && (
             <fieldset>
               <legend className="text-muted-foreground text-xs font-semibold tracking-[0.18em] uppercase">
-                Cantidad por sabor
+                {content.customOrderModal.quantityLabel}
               </legend>
               <div className="mt-3 space-y-3">
                 <div className="flex items-center justify-between">
                   <p className="text-sm">
-                    Te quedan: <strong>{pieces - totalAssigned}</strong> piezas
+                    {content.customOrderModal.remainingPiecesLabel
+                      .split("{remaining}")
+                      .map((part, i) => (
+                        <Fragment key={i}>
+                          {part}
+                          {i === 0 ? (
+                            <strong>{pieces - totalAssigned}</strong>
+                          ) : null}
+                        </Fragment>
+                      ))}
                   </p>
                   <div className="flex gap-2">
                     <Button variant="secondary" onClick={distributeEvenly}>
-                      Repartir parejo
+                      {content.customOrderModal.distributeEvenlyLabel}
                     </Button>
                   </div>
                 </div>
@@ -276,14 +302,16 @@ export function CustomOrderModal({
                   <div className="flex items-baseline justify-between">
                     <div>
                       <div className="text-muted-foreground text-xs">
-                        Precio estimado
+                        {content.customOrderModal.estimatedPriceLabel}
                       </div>
                       <div className="text-xl font-bold">
                         {formatPrice(subtotal)}
                       </div>
                     </div>
                     <div className="text-muted-foreground text-right text-xs">
-                      {totalAssigned}/{pieces} piezas
+                      {content.customOrderModal.assignedPiecesLabel
+                        .replace("{assigned}", String(totalAssigned))
+                        .replace("{total}", String(pieces))}
                     </div>
                   </div>
                 </div>
@@ -300,7 +328,7 @@ export function CustomOrderModal({
                 disabled={step === 2 && selectedFlavorIds.length === 0}
                 className="w-full"
               >
-                Continuar
+                {content.wizard.continueLabel}
               </Button>
             ) : (
               <Button
@@ -308,7 +336,7 @@ export function CustomOrderModal({
                 onClick={onConfirmInner}
                 className="w-full"
               >
-                Confirmar
+                {content.customOrderModal.confirmButtonLabel}
               </Button>
             )}
             <div className="flex gap-2">
@@ -320,7 +348,7 @@ export function CustomOrderModal({
                 }}
                 className="w-full"
               >
-                Volver
+                {content.wizard.backLabel}
               </Button>
             </div>
           </div>

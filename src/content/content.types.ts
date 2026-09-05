@@ -100,6 +100,7 @@ export type FooterContent = {
   contact: {
     title: string;
     whatsappLabel: string;
+    whatsappMessage: string;
   };
   linksTitle: string;
   socialsTitle: string;
@@ -136,6 +137,25 @@ export type OrderContent = {
       title: string;
       description: string;
     }>;
+  };
+  flavorBreakdown: {
+    includesLabel: string;
+    flavorCountLabel: string;
+    unitLabel: string;
+  };
+  customOrderModal: {
+    titleLabel: string;
+    stepLabel: string;
+    piecesLabel: string;
+    pieceOptionLabel: string;
+    flavorLimitLabel: string;
+    selectedCountLabel: string;
+    quantityLabel: string;
+    remainingPiecesLabel: string;
+    distributeEvenlyLabel: string;
+    estimatedPriceLabel: string;
+    assignedPiecesLabel: string;
+    confirmButtonLabel: string;
   };
   reserveHeading: string;
   gallery: {

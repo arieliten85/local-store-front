@@ -2,10 +2,12 @@ import type {
   OrderSize,
   ProductComposition,
 } from "@/features/order/model/order.types";
+import type { OrderContent } from "@/content/content.types";
 
 type FlavorBreakdownTableProps = {
   composition: ProductComposition;
   sizes: OrderSize[];
+  content: OrderContent;
 };
 
 /** Separa "Nombre (descripción)" en nombre y descripción opcional. */
@@ -18,19 +20,21 @@ function splitFlavorLabel(flavor: string) {
 export function FlavorBreakdownTable({
   composition,
   sizes,
+  content,
 }: FlavorBreakdownTableProps) {
   if (composition.length === 0) return null;
+  const { flavorBreakdown } = content;
 
   return (
     <div className="mt-4">
       <p className="text-muted-foreground text-[10px] font-semibold tracking-[0.18em] uppercase">
-        Incluye
+        {flavorBreakdown.includesLabel}
       </p>
       <table className="mt-1.5 w-full text-sm" role="table">
         <thead>
           <tr className="text-muted-foreground border-border/40 border-b text-left text-[10px] font-semibold tracking-wide uppercase">
             <th className="pr-3 pb-1.5" scope="col">
-              8 Sabores
+              {composition.length} {flavorBreakdown.flavorCountLabel}
             </th>
             {sizes.map((size) => (
               <th
@@ -38,7 +42,7 @@ export function FlavorBreakdownTable({
                 className="px-1.5 pb-1.5 text-center tabular-nums"
                 scope="col"
               >
-                {size.pieceCount} un.
+                {size.pieceCount} {flavorBreakdown.unitLabel}
               </th>
             ))}
           </tr>

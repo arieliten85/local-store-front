@@ -17,7 +17,7 @@ export function Header({ name, logo, navigation, note, cta }: HeaderProps) {
         <a
           href="#home"
           className="focus-visible:outline-accent flex shrink-0 items-center rounded-sm"
-          aria-label={`${name}: go to home`}
+          aria-label={`${name}: Back to top`}
         >
           {logo?.src ? (
             <Image
@@ -31,7 +31,7 @@ export function Header({ name, logo, navigation, note, cta }: HeaderProps) {
             <span className="font-heading text-xl font-semibold">{name}</span>
           )}
         </a>
-        <nav aria-label="Main" className="hidden items-center gap-6 lg:flex">
+        <nav aria-label="Main menu" className="hidden items-center gap-6 lg:flex">
           {navigation.map((item) => (
             <a
               key={item.href}

@@ -73,7 +73,7 @@ export function CustomOrderSection({ formRef, sizes, content }: Props) {
                 <Button
                   type="button"
                   onClick={() => setOpen(true)}
-                  className="group/cta h-13 rounded-xl px-7 text-[14px] font-semibold shadow-[0_10px_30px_rgba(var(--primary-rgb),0.2)] transition-all duration-300 hover:-translate-y-0.5"
+                  className="group/cta h-13 rounded-xl px-7 text-[14px] font-semibold shadow-cta transition-all duration-300 hover:-translate-y-0.5"
                   aria-label={customOrder.cta}
                 >
                   {customOrder.cta}

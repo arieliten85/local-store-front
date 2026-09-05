@@ -115,7 +115,7 @@ export function Footer({
               <button
                 type="button"
                 onClick={handleContactClick}
-                aria-label="Contactar por WhatsApp"
+                aria-label="Contact on WhatsApp"
                 className="text-muted-foreground hover:text-accent focus-visible:outline-accent mt-3 inline-flex items-center gap-2 rounded-sm text-sm transition-colors focus-visible:outline-3 focus-visible:outline-offset-3"
               >
                 <FaWhatsapp className="h-4 w-4" aria-hidden="true" />
@@ -123,7 +123,7 @@ export function Footer({
                 {!isMobile &&
                   (copied ? (
                     <FiCheck
-                      className="h-4 w-4 text-emerald-500"
+                      className="h-4 w-4 text-status-success"
                       aria-hidden="true"
                     />
                   ) : (
@@ -134,7 +134,7 @@ export function Footer({
           </div>
 
           <div className="grid content-start gap-7">
-            <nav aria-label="Footer">
+            <nav aria-label="Links">
               <FooterTitle>{content.linksTitle}</FooterTitle>
               <ul className="mt-3 grid gap-2.5">
                 {navigation.map((item) => (
@@ -150,7 +150,7 @@ export function Footer({
               </ul>
             </nav>
             {socials.length > 0 ? (
-              <nav aria-label="Social links">
+              <nav aria-label="Social media">
                 <FooterTitle>{content.socialsTitle}</FooterTitle>
                 <ul className="mt-3 flex flex-wrap justify-center gap-4 sm:justify-start">
                   {socials.map((item) => (

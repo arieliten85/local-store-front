@@ -249,7 +249,11 @@ export const OrderBuilderForm = forwardRef<
           })}
         </div>
         {composition ? (
-          <FlavorBreakdownTable composition={composition} sizes={sizes} />
+          <FlavorBreakdownTable
+            composition={composition}
+            sizes={sizes}
+            content={content}
+          />
         ) : null}
         <p
           aria-live="polite"

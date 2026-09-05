@@ -3,6 +3,7 @@ import type { ReactNode } from "react";
 import { defaultMetadata } from "@/config/seo.config";
 import { siteConfig } from "@/config/site.config";
 import { createRestaurantJsonLd } from "@/lib/seo/json-ld";
+import { footerContent } from "@/content/footer.content";
 import { bodyFont, headingFont } from "@/theme/fonts";
 import "./globals.css";
 import { WhatsAppFab } from "@/components/ui/whatsapp-fab";
@@ -25,7 +26,7 @@ export default function RootLayout({
           dangerouslySetInnerHTML={{ __html: JSON.stringify(restaurantJsonLd) }}
         />
         {children}
-        <WhatsAppFab />
+        <WhatsAppFab message={footerContent.contact.whatsappMessage} />
       </body>
     </html>
   );

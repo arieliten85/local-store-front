@@ -7,7 +7,7 @@ export const footerContent = {
   },
   deliveries: {
     title: "ENTREGAS",
-    lines: ["Viernes y sábado", "18:00 — 21:00"],
+    lines: ["Viernes y sábado", "20:00 — 23:00"],
   },
   coverage: {
     title: "ZONA DE DELIVERY",
@@ -17,6 +17,7 @@ export const footerContent = {
   contact: {
     title: "CONTACTO",
     whatsappLabel: "WhatsApp",
+    whatsappMessage: "Hola! Tengo una consulta sobre pedidos.",
   },
   linksTitle: "ENLACES",
   socialsTitle: "SEGUINOS",

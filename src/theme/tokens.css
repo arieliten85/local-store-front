@@ -19,6 +19,7 @@
   --card-product-muted: rgb(78 70 55 / 0.1);
   --status-success: #42b96b;
   --status-danger: #a66b63;
+  --brand-whatsapp: #25d366;
 
   --radius-token-sm: 0.375rem;
   --radius-token-md: 0.75rem;
@@ -30,6 +31,7 @@
   --shadow-token-sm: 0 1px 2px rgb(0 0 0 / 0.18);
   --shadow-token-md: 0 12px 32px rgb(0 0 0 / 0.24);
   --shadow-token-lg: 0 24px 70px rgb(0 0 0 / 0.32);
+  --shadow-token-cta: 0 10px 30px rgb(235 193 102 / 0.2);
 
   --container: 75rem;
   --content-narrow: 42rem;
@@ -61,6 +63,7 @@
   --color-card-product-muted: var(--card-product-muted);
   --color-status-success: var(--status-success);
   --color-status-danger: var(--status-danger);
+  --color-brand-whatsapp: var(--brand-whatsapp);
   --font-heading: var(--font-heading-family);
   --font-body: var(--font-body-family);
   --radius-sm: var(--radius-token-sm);
@@ -72,6 +75,7 @@
   --shadow-sm: var(--shadow-token-sm);
   --shadow-md: var(--shadow-token-md);
   --shadow-lg: var(--shadow-token-lg);
+  --shadow-cta: var(--shadow-token-cta);
   --spacing-container: var(--container);
   --spacing-content-narrow: var(--content-narrow);
   --spacing-content-medium: var(--content-medium);
